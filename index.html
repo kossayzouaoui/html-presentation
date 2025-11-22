@@ -1,883 +1,1024 @@
-import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Zap, Leaf, Battery, Globe, Factory } from 'lucide-react';
+Since I cannot render a live React application directly in this chat interface, I have prepared two things for you:
 
-const BiomassPresentation = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+1.  **A "Visual" Text Preview:** A formatted summary of the slides below so you can verify the content immediately.
+2.  **A Playable HTML File:** A block of code you can save as an `.html` file to run the actual interactive presentation in your browser without needing to install React or Node.js.
 
-  // Abbreviations slide content
-  const abbreviations = [
-    { abbr: 'MSW', en: 'Municipal Solid Waste', ar: 'النفايات الصلبة البلدية' },
-    { abbr: 'AD', en: 'Anaerobic Digestion', ar: 'الهضم اللاهوائي' },
-    { abbr: 'LHV', en: 'Lower Heating Value', ar: 'القيمة الحرارية المنخفضة' },
-    { abbr: 'CGE', en: 'Cold Gas Efficiency', ar: 'كفاءة الغاز البارد' },
-    { abbr: 'RTE', en: 'Round-Trip Efficiency', ar: 'كفاءة الدورة الكاملة' },
-    { abbr: 'BESS', en: 'Battery Energy Storage System', ar: 'نظام تخزين الطاقة بالبطاريات' },
-    { abbr: 'TES', en: 'Thermal Energy Storage', ar: 'تخزين الطاقة الحرارية' },
-    { abbr: 'CAES', en: 'Compressed Air Energy Storage', ar: 'تخزين الطاقة بالهواء المضغوط' },
-    { abbr: 'CHP', en: 'Combined Heat and Power', ar: 'التوليد المشترك للحرارة والكهرباء' },
-    { abbr: 'LCOE', en: 'Levelized Cost of Energy', ar: 'تكلفة الطاقة المستوية' },
-  ];
+-----
 
-  const slides = [
-    {
-      title: "Biomass Electricity Generation and Storage | توليد الكهرباء من الكتلة الحيوية والتخزين",
-      subtitle: "Technologies, Efficiency, and Algerian Potential | التقنيات، الكفاءة، والإمكانيات الجزائرية",
-      content: (
-        <div className="flex flex-col items-center justify-center h-full space-y-8">
-          <div className="flex space-x-12">
-            <Leaf className="w-24 h-24 text-green-600" />
-            <Zap className="w-24 h-24 text-yellow-500" />
-            <Battery className="w-24 h-24 text-blue-600" />
-          </div>
-          <div className="text-center space-y-4">
-            <p className="text-2xl font-bold text-gray-800">Prepared by | إعداد:</p>
-            <p className="text-xl text-gray-700">Kosai Zouaoui</p>
-            <p className="text-xl text-gray-700">Abderrahmane Slama</p>
-            <p className="text-lg text-gray-600 mt-6">Department of Electrical and Renewable Energy Engineering | قسم الهندسة الكهربائية وطاقات متجددة</p>
-            <p className="text-lg text-gray-600">November 2025 | نوفمبر 2025</p>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Abbreviations and Explanations | الاختصارات والتفسيرات",
-      content: (
-        <div className="space-y-6">
-          <p className="text-lg text-gray-700">Key terms used in this presentation | المصطلحات الرئيسية المستخدمة في هذا العرض:</p>
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-gray-200">
-                <th className="border px-4 py-2">Abbr. | الاختصار</th>
-                <th className="border px-4 py-2">English | الإنجليزية</th>
-                <th className="border px-4 py-2">Arabic | العربية</th>
-              </tr>
-            </thead>
-            <tbody>
-              {abbreviations.map((item, index) => (
-                <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : ''}>
-                  <td className="border px-4 py-2 font-bold">{item.abbr}</td>
-                  <td className="border px-4 py-2">{item.en}</td>
-                  <td className="border px-4 py-2" dir="rtl">{item.ar}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )
-    },
-    {
-      title: "Introduction to Biomass Energy | مقدمة في طاقة الكتلة الحيوية",
-      content: (
-        <div className="space-y-6">
-          <div className="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-bold mb-4 text-green-700">What is Biomass? | ما هي الكتلة الحيوية؟</h3>
-            <p className="text-lg mb-4">Biomass = organic materials (MSW, agricultural waste, residues) | الكتلة الحيوية = مواد عضوية (النفايات الصلبة البلدية، نفايات زراعية، بقايا)</p>
-          </div>
-          <div className="grid grid-cols-2 gap-6">
-            <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
-              <h4 className="font-bold text-blue-700 mb-3 flex items-center gap-2">
-                <Globe className="w-5 h-5" />
-                Global Context | السياق العالمي
-              </h4>
-              <div className="space-y-2 text-sm">
-                <p>Provides approximately 4.4% of global renewable electricity capacity in 2024, projected to ~5-6% by 2025 | توفر حوالي 4.4% من سعة الكهرباء المتجددة العالمية في 2024، متوقعة ~5-6% بحلول 2025</p>
-                <p>Total capacity: approximately 151 GW worldwide in 2024, expected 155-160 GW by 2025 | السعة الإجمالية: حوالي 151 جيجاوات عالمياً في 2024، متوقع 155-160 جيجاوات بحلول 2025</p>
-                <p className="font-semibold">Key advantage: Baseload renewable power (non-intermittent) | الميزة الرئيسية: طاقة متجددة أساسية (غير متقطعة)</p>
-              </div>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
-              <h4 className="font-bold text-green-700 mb-3 flex items-center gap-2">
-                <Factory className="w-5 h-5" />
-                Algerian Context | السياق الجزائري
-              </h4>
-              <div className="space-y-2 text-sm">
-                <p>Algeria produces ~13-15M tons MSW per year in 2025 (projected from 10M in earlier years) | تنتج الجزائر ~13-15 مليون طن نفايات صلبة بلدية سنوياً في 2025</p>
-                <p>Large date palm residues available (~500,000 tons/year in regions like Biskra) | بقايا نخيل التمر المتاحة الكبيرة (~500,000 طن/سنة في مناطق مثل بسكرة)</p>
-                <p>Potential: 50-70 MW capacity, contributing 1-2% of national electricity demand | الإمكانية: 50-70 ميغاوات سعة، مساهمة 1-2% من الطلب الوطني على الكهرباء</p>
-                <p>Aligns with Algeria 27% renewable target by 2035 (15-20 GW renewable capacity) | يتوافق مع هدف الجزائر 27% طاقة متجددة بحلول 2035 (15-20 جيجاوات سعة متجددة)</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-yellow-50 p-5 rounded-lg border-l-4 border-yellow-500">
-            <p className="text-lg font-semibold text-gray-800">
-              Biomass offers Algeria a reliable, sustainable pathway to diversify its energy mix and utilize abundant organic waste resources. | توفر الكتلة الحيوية للجزائر مساراً موثوقاً ومستداماً لتنويع مزيج الطاقة واستخدام موارد النفايات العضوية الوفيرة.
-            </p>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Full Process: From Biomass to Electricity | العملية الكاملة: من الكتلة الحيوية إلى الكهرباء",
-      subtitle: "Detailed Steps for Conversion | الخطوات التفصيلية للتحويل",
-      content: (
-        <div className="space-y-6">
-          <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-green-500">
-            <h3 className="text-xl font-bold mb-4 text-center text-green-700">Anaerobic Digestion Process | عملية الهضم اللاهوائي</h3>
-            <ol className="list-decimal space-y-4 text-sm ml-6">
-              <li><strong>Collection and Pre-treatment</strong>: Gather biomass (e.g., MSW, agricultural waste), sort, shred, and mix with water. | جمع ومعالجة مسبقة: جمع الكتلة الحيوية (مثل النفايات الصلبة البلدية، نفايات زراعية)، فرز، تمزيق، وخلط مع الماء.</li>
-              <li><strong>Hydrolysis</strong>: Bacteria break down complex organics into simple sugars, amino acids, fatty acids. | التحلل المائي: البكتيريا تكسر المواد العضوية المعقدة إلى سكريات بسيطة، أحماض أمينية، أحماض دهنية.</li>
-              <li><strong>Acidogenesis</strong>: Conversion to volatile fatty acids (VFAs), alcohols, H2, CO2. | تكوين الأحماض: تحويل إلى أحماض دهنية متطايرة، كحوليات، H2، CO2.</li>
-              <li><strong>Acetogenesis</strong>: VFAs to acetic acid, H2, CO2. | تكوين الأسيتات: الأحماض الدهنية المتطايرة إلى حمض أسيتيك، H2، CO2.</li>
-              <li><strong>Methanogenesis</strong>: Produce methane (CH4) and CO2 (biogas). | تكوين الميثان: إنتاج الميثان (CH4) وCO2 (الغاز الحيوي).</li>
-              <li><strong>Biogas Utilization</strong>: Clean biogas, burn in gas engine or turbine to generate electricity. | استخدام الغاز الحيوي: تنظيف الغاز الحيوي، حرقه في محرك غاز أو توربين لتوليد الكهرباء.</li>
-              <li><strong>Digestate Management</strong>: Use residue as fertilizer. | إدارة المتبقي: استخدام البقايا كسماد.</li>
-            </ol>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-orange-500">
-            <h3 className="text-xl font-bold mb-4 text-center text-orange-700">Gasification Process | عملية الغازية</h3>
-            <ol className="list-decimal space-y-4 text-sm ml-6">
-              <li><strong>Collection and Pre-treatment</strong>: Dry biomass (e.g., palm residues), shred to uniform size. | جمع ومعالجة مسبقة: الكتلة الحيوية الجافة (مثل بقايا النخيل)، تمزيق إلى حجم موحد.</li>
-              <li><strong>Drying</strong>: Reduce moisture content to <20%. | التجفيف: تقليل محتوى الرطوبة إلى <20%.</li>
-              <li><strong>Pyrolysis</strong>: Heat in absence of oxygen to produce char, tars, gases. | التحلل الحراري: تسخين في غياب الأكسجين لإنتاج الفحم، القطران، الغازات.</li>
-              <li><strong>Combustion/Partial Oxidation</strong>: Limited oxygen to produce CO, H2, CO2. | الاحتراق/التأكسد الجزئي: أكسجين محدود لإنتاج CO، H2، CO2.</li>
-              <li><strong>Cracking and Reduction</strong>: Break down tars, reduce to syngas (CO + H2). | التكسير والاختزال: تكسير القطران، اختزال إلى غاز تركيبي (CO + H2).</li>
-              <li><strong>Syngas Cleaning</strong>: Remove impurities. | تنظيف الغاز التركيبي: إزالة الشوائب.</li>
-              <li><strong>Electricity Generation</strong>: Burn syngas in gas engine/turbine. | توليد الكهرباء: حرق الغاز التركيبي في محرك غاز/توربين.</li>
-            </ol>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Biomass Methods (Global vs Algeria) | طرق الكتلة الحيوية (العالمي مقابل الجزائري)",
-      subtitle: "Electricity Generation Pathways | مسارات توليد الكهرباء",
-      content: (
-        <div className="space-y-6">
-          <div className="overflow-hidden rounded-lg shadow-lg border-2 border-gray-300">
-            <table className="w-full">
-              <thead className="bg-gradient-to-r from-green-600 to-blue-600 text-white">
-                <tr>
-                  <th className="px-4 py-3 text-left">Method | الطريقة</th>
-                  <th className="px-4 py-3 text-left">Global Share | الحصة العالمية</th>
-                  <th className="px-4 py-3 text-left">Algeria | الجزائر</th>
-                  <th className="px-4 py-3 text-left">Notes | ملاحظات</th>
-                </tr>
-              </thead>
-              <tbody className="text-sm">
-                <tr className="bg-white border-b hover:bg-gray-50">
-                  <td className="px-4 py-4 font-bold text-orange-700">Direct Combustion | الاحتراق المباشر</td>
-                  <td className="px-4 py-4">~85-90% | ~85-90%</td>
-                  <td className="px-4 py-4 text-red-600 font-semibold">Minimal | ضئيل</td>
-                  <td className="px-4 py-4">Cheap but requires dry biomass | رخيص لكنه يتطلب كتلة حيوية جافة</td>
-                </tr>
-                <tr className="bg-gray-50 border-b hover:bg-gray-100">
-                  <td className="px-4 py-4 font-bold text-green-700">Anaerobic Digestion (AD) | الهضم اللاهوائي (AD)</td>
-                  <td className="px-4 py-4">~2-5% | ~2-5%</td>
-                  <td className="px-4 py-4 text-green-600 font-semibold">Primary | الأساسية</td>
-                  <td className="px-4 py-4">Suited for wet MSW; 30-40% efficiency | مناسب للنفايات الرطبة؛ كفاءة 30-40%</td>
-                </tr>
-                <tr className="bg-white border-b hover:bg-gray-50">
-                  <td className="px-4 py-4 font-bold text-purple-700">Gasification | الغازية</td>
-                  <td className="px-4 py-4">3-5% | 3-5%</td>
-                  <td className="px-4 py-4 text-blue-600 font-semibold">Emerging | ناشئة</td>
-                  <td className="px-4 py-4">High efficiency (45-50%) | كفاءة عالية (45-50%)</td>
-                </tr>
-                <tr className="bg-gray-50 hover:bg-gray-100">
-                  <td className="px-4 py-4 font-bold text-gray-700">Co-firing | الاحتراق المشترك</td>
-                  <td className="px-4 py-4">5-10% | 5-10%</td>
-                  <td className="px-4 py-4 text-gray-500 font-semibold">None | لا يوجد</td>
-                  <td className="px-4 py-4">Requires coal plants | يتطلب محطات فحم</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="bg-orange-50 p-4 rounded-lg shadow text-center">
-              <p className="text-3xl font-bold text-orange-600 mb-2">~90% | ~90%</p>
-              <p className="text-sm font-semibold">Global Combustion | الاحتراق العالمي</p>
-            </div>
-            <div className="bg-green-50 p-4 rounded-lg shadow text-center">
-              <p className="text-3xl font-bold text-green-600 mb-2">Primary | الأساسية</p>
-              <p className="text-sm font-semibold">Algeria: AD Focus | التركيز على AD في الجزائر</p>
-            </div>
-            <div className="bg-blue-50 p-4 rounded-lg shadow text-center">
-              <p className="text-3xl font-bold text-blue-600 mb-2">45-50% | 45-50%</p>
-              <p className="text-sm font-semibold">Gasification Efficiency | كفاءة الغازية</p>
-            </div>
-          </div>
-          <div className="bg-blue-50 p-5 rounded-lg border-l-4 border-blue-600">
-            <p className="font-semibold text-gray-800">
-              Key for Algeria: Anaerobic Digestion is most suitable due to high MSW moisture content. Gasification emerging as a future option for dry agricultural residues. | المفتاح للجزائر: الهضم اللاهوائي أنسب بسبب محتوى الرطوبة العالي في النفايات. الغازية ناشئة كخيار مستقبلي لبقايا زراعية جافة.
-            </p>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Anaerobic Digestion (AD) Process | عملية الهضم اللاهوائي (AD)",
-      subtitle: "Primary Technology for Algeria | التقنية الأساسية للجزائر",
-      content: (
-        <div className="space-y-6">
-          <div className="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg shadow-lg">
-            <h3 className="text-xl font-bold mb-4 text-center">Four-Stage Biochemical Process | عملية بيوكيميائية بأربع مراحل</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white p-4 rounded-lg shadow border-l-4 border-green-500">
-                <p className="font-bold text-green-700 text-lg mb-2">1. Hydrolysis | 1. التحلل المائي</p>
-                <p className="text-sm">Complex organics to Simple sugars, amino acids, fatty acids | المواد العضوية المعقدة إلى سكريات بسيطة، أحماض أمينية، أحماض دهنية</p>
-                <p className="text-xs text-gray-600 mt-2">Enzymes break down polymers | الإنزيمات تكسر البوليمرات</p>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow border-l-4 border-blue-500">
-                <p className="font-bold text-blue-700 text-lg mb-2">2. Acidogenesis | 2. تكوين الأحماض</p>
-                <p className="text-sm">Simple compounds to Volatile Fatty Acids (VFAs) | المركبات البسيطة إلى أحماض دهنية متطايرة</p>
-                <p className="text-xs text-gray-600 mt-2">Acidogenic bacteria produce VFAs | البكتيريا المكونة للأحماض تنتج أحماض دهنية متطايرة</p>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow border-l-4 border-purple-500">
-                <p className="font-bold text-purple-700 text-lg mb-2">3. Acetogenesis | 3. تكوين الأسيتات</p>
-                <p className="text-sm">VFAs to Acetate + H2 + CO2 | الأحماض الدهنية المتطايرة إلى أسيتات + H2 + CO2</p>
-                <p className="text-xs text-gray-600 mt-2">Acetogenic bacteria convert VFAs | البكتيريا المكونة للأسيتات تحول الأحماض الدهنية المتطايرة</p>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow border-l-4 border-orange-500">
-                <p className="font-bold text-orange-700 text-lg mb-2">4. Methanogenesis | 4. تكوين الميثان</p>
-                <p className="text-sm">Acetate + H2 to CH4 + CO2 | الأسيتات + H2 إلى CH4 + CO2</p>
-                <p className="text-xs text-gray-600 mt-2">Methanogens produce biogas | الكائنات المكونة للميثان تنتج الغاز الحيوي</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h4 className="font-bold mb-4 text-lg">Key Chemical Equations | المعادلات الكيميائية الرئيسية:</h4>
-            <div className="space-y-3">
-              <div className="bg-gray-100 p-4 rounded border-l-4 border-green-500">
-                <p className="font-mono text-sm mb-1">C6H12O6 → 3CH4 + 3CO2</p>
-                <p className="text-xs text-gray-600">Glucose fermentation | تخمير الجلوكوز</p>
-              </div>
-              <div className="bg-gray-100 p-4 rounded border-l-4 border-blue-500">
-                <p className="font-mono text-sm mb-1">CH3COOH → CH4 + CO2</p>
-                <p className="text-xs text-gray-600">Acetate cleavage (acetoclastic pathway) | تقسيم الأسيتات (مسار أسيتكلاستيك)</p>
-              </div>
-              <div className="bg-gray-100 p-4 rounded border-l-4 border-purple-500">
-                <p className="font-mono text-sm mb-1">4H2 + CO2 → CH4 + 2H2O</p>
-                <p className="text-xs text-gray-600">Hydrogenotrophic methanogenesis | تكوين الميثان الهيدروجينوتروفي</p>
-              </div>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-green-50 p-4 rounded-lg shadow">
-              <p className="font-bold text-green-700 mb-2">Biogas Composition | تركيب الغاز الحيوي</p>
-              <p className="text-sm">CH4: 55-70% | CH4: 55-70%</p>
-              <p className="text-sm">CO2: 30-45% | CO2: 30-45%</p>
-              <p className="text-sm">Trace: H2S, NH3 | آثار: H2S, NH3</p>
-            </div>
-            <div className="bg-blue-50 p-4 rounded-lg shadow">
-              <p className="font-bold text-blue-700 mb-2">Energy Content | المحتوى الطاقي</p>
-              <p className="text-sm">LHV: 20-25 MJ/m3 | القيمة الحرارية المنخفضة: 20-25 ميغاجول/م3</p>
-              <p className="text-sm">Efficiency: 30-40% | الكفاءة: 30-40%</p>
-              <p className="text-sm">Retention: 15-30 days | الاحتفاظ: 15-30 يوم</p>
-            </div>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Gasification Technology | تقنية الغازية",
-      subtitle: "Emerging Option for Dry Biomass | خيار ناشئ للكتلة الحيوية الجافة",
-      content: (
-        <div className="space-y-6">
-          <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-orange-500">
-            <h3 className="text-xl font-bold mb-4 text-center text-orange-700">Gasification Process Flow | تدفق عملية الغازية</h3>
-            <div className="flex items-center justify-around flex-wrap gap-2">
-              <div className="text-center">
-                <div className="w-28 h-28 bg-green-500 rounded-lg flex items-center justify-center text-white font-bold text-xs px-2">
-                  Dry Biomass<br/>كتلة حيوية جافة
-                </div>
-                <p className="mt-2 text-xs">Date palm waste | بقايا نخيل التمر</p>
-              </div>
-              <div className="text-3xl text-gray-600">→</div>
-              <div className="text-center">
-                <div className="w-28 h-28 bg-orange-500 rounded-lg flex items-center justify-center text-white font-bold text-xs px-2">
-                  Gasifier 700-1200°C<br/>غازي 700-1200 درجة مئوية
-                </div>
-                <p className="mt-2 text-xs">Partial oxidation | التأكسد الجزئي</p>
-              </div>
-              <div className="text-3xl text-gray-600">→</div>
-              <div className="text-center">
-                <div className="w-28 h-28 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-xs px-2">
-                  Syngas CO + H2<br/>غاز تركيبي CO + H2
-                </div>
-                <p className="mt-2 text-xs">LHV: 4-6 MJ/Nm3 | القيمة الحرارية المنخفضة: 4-6 ميغاجول/ن.م3</p>
-              </div>
-              <div className="text-3xl text-gray-600">→</div>
-              <div className="text-center">
-                <div className="w-28 h-28 bg-purple-500 rounded-lg flex items-center justify-center text-white font-bold text-xs px-2">
-                  Gas Engine<br/>محرك غاز
-                </div>
-                <p className="mt-2 text-xs">Electricity | الكهرباء</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-gray-50 p-6 rounded-lg shadow-md">
-            <h4 className="font-bold mb-4 text-lg">Key Gasification Reactions | التفاعلات الرئيسية في الغازية:</h4>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-white p-3 rounded shadow">
-                <p className="font-mono text-sm mb-1">C + O2 → CO2</p>
-                <p className="text-xs text-gray-600">Combustion (ΔH = -394 kJ/mol) | الاحتراق (ΔH = -394 كيلوجول/مول)</p>
-              </div>
-              <div className="bg-white p-3 rounded shadow">
-                <p className="font-mono text-sm mb-1">C + 0.5O2 → CO</p>
-                <p className="text-xs text-gray-600">Partial oxidation (ΔH = -111 kJ/mol) | التأكسد الجزئي (ΔH = -111 كيلوجول/مول)</p>
-              </div>
-              <div className="bg-white p-3 rounded shadow">
-                <p className="font-mono text-sm mb-1">C + H2O → CO + H2</p>
-                <p className="text-xs text-gray-600">Water-gas reaction (ΔH = +131 kJ/mol) | تفاعل غاز الماء (ΔH = +131 كيلوجول/مول)</p>
-              </div>
-              <div className="bg-white p-3 rounded shadow">
-                <p className="font-mono text-sm mb-1">C + CO2 → 2CO</p>
-                <p className="text-xs text-gray-600">Boudouard reaction (ΔH = +172 kJ/mol) | تفاعل بودوارد (ΔH = +172 كيلوجول/مول)</p>
-              </div>
-            </div>
-          </div>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="bg-orange-50 p-4 rounded-lg text-center shadow">
-              <p className="text-2xl font-bold text-orange-600">45-50%</p>
-              <p className="text-sm font-semibold mt-1">Overall Efficiency | الكفاءة الإجمالية</p>
-            </div>
-            <div className="bg-green-50 p-4 rounded-lg text-center shadow">
-              <p className="text-2xl font-bold text-green-600">70-90%</p>
-              <p className="text-sm font-semibold mt-1">Cold Gas Efficiency | كفاءة الغاز البارد</p>
-            </div>
-            <div className="bg-blue-50 p-4 rounded-lg text-center shadow">
-              <p className="text-2xl font-bold text-blue-600">Emerging | ناشئة</p>
-              <p className="text-sm font-semibold mt-1">Status in Algeria | الوضع في الجزائر</p>
-            </div>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Efficiency Calculations - Anaerobic Digestion | حسابات الكفاءة - الهضم اللاهوائي",
-      content: (
-        <div className="space-y-6">
-          <div className="bg-green-50 p-6 rounded-lg shadow-md border-2 border-green-500">
-            <h3 className="text-xl font-bold mb-4">Overall AD System Efficiency | كفاءة نظام AD الإجمالية</h3>
-            <div className="bg-white p-4 rounded border-2 border-green-400">
-              <p className="text-center text-2xl font-bold mb-4">
-                η = (Eelec / Ebiomass) × 100%
-              </p>
-              <div className="text-sm space-y-1">
-                <p>Eelec = Electrical energy output (kWh) | Eelec = إخراج الطاقة الكهربائية (كيلووات ساعة)</p>
-                <p>Ebiomass = Energy content of input biomass (kWh) | Ebiomass = محتوى الطاقة في الكتلة الحيوية المدخلة (كيلووات ساعة)</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-blue-50 p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-bold mb-4">Example: Algerian MSW Plant | مثال: محطة نفايات صلبة بلدية جزائرية</h3>
-            <div className="space-y-3 text-sm">
-              <div className="bg-white p-4 rounded shadow">
-                <p className="font-bold mb-2 text-blue-700">Given Parameters | المعطيات:</p>
-                <p>MSW input: 100 tons/day (organic fraction: 60%) | مدخل النفايات: 100 طن/يوم (الجزء العضوي: 60%)</p>
-                <p>Biogas yield: 100-120 m3/ton organic waste (updated from research) | إنتاج الغاز الحيوي: 100-120 م3/طن نفايات عضوية</p>
-                <p>Methane content: 55-70% | محتوى الميثان: 55-70%</p>
-                <p>LHV of CH4: 35.8 MJ/m3 | القيمة الحرارية المنخفضة لـ CH4: 35.8 ميغاجول/م3</p>
-                <p>Engine efficiency: 35-40% | كفاءة المحرك: 35-40%</p>
-              </div>
-              <div className="bg-white p-4 rounded border-l-4 border-green-500">
-                <p className="font-bold mb-3 text-green-700">Step-by-Step Solution | الحل خطوة بخطوة:</p>
-                <p className="font-semibold mb-1">1. Organic waste per day | النفايات العضوية يومياً:</p>
-                <p className="mb-3 ml-4">= 100 tons × 0.6 = <span className="font-bold text-blue-600">60 tons/day | 60 طن/يوم</span></p>
-                <p className="font-semibold mb-1">2. Total biogas production | إنتاج الغاز الحيوي الإجمالي:</p>
-                <p className="mb-3 ml-4">= 60 tons × 110 m3/ton (avg) = <span className="font-bold text-blue-600">6,600 m3/day | 6,600 م3/يوم</span></p>
-                <p className="font-semibold mb-1">3. Methane volume | حجم الميثان:</p>
-                <p className="mb-3 ml-4">= 6,600 × 0.6 = <span className="font-bold text-blue-600">3,960 m3 CH4/day | 3,960 م3 CH4/يوم</span></p>
-                <p className="font-semibold mb-1">4. Energy content | المحتوى الطاقي:</p>
-                <p className="mb-3 ml-4">= 3,960 m3 × 35.8 MJ/m3 / 3.6 = <span className="font-bold text-blue-600">39,380 kWh/day | 39,380 كيلووات ساعة/يوم</span></p>
-                <p className="font-semibold mb-1">5. Electrical output | الإخراج الكهربائي:</p>
-                <p className="mb-3 ml-4">= 39,380 kWh × 0.375 (avg eff) = <span className="font-bold text-green-600 text-lg">14,768 kWh/day | 14,768 كيلووات ساعة/يوم</span></p>
-                <p className="font-semibold mb-1">6. Average power | القدرة المتوسطة:</p>
-                <p className="ml-4">= 14,768 kWh / 24 h = <span className="font-bold text-green-600 text-xl">615 kW (0.615 MW) | 615 كيلووات (0.615 ميغاوات)</span></p>
-              </div>
-              <div className="bg-yellow-50 p-4 rounded">
-                <p className="font-bold text-yellow-800 mb-2">Overall System Efficiency | الكفاءة الإجمالية للنظام:</p>
-                <p>η = 35-40% (engine) × 90% (biogas conversion) = <span className="font-bold text-lg">31.5-36% | 31.5-36%</span></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Efficiency Calculations - Gasification | حسابات الكفاءة - الغازية",
-      content: (
-        <div className="space-y-6">
-          <div className="bg-orange-50 p-6 rounded-lg shadow-md border-2 border-orange-500">
-            <h3 className="text-xl font-bold mb-4">Cold Gas Efficiency (CGE) | كفاءة الغاز البارد (CGE)</h3>
-            <div className="bg-white p-4 rounded border-2 border-orange-400">
-              <p className="text-center text-xl font-bold mb-4">
-                CGE = (LHVgas × Vgas) / (LHVbiomass × mbiomass) × 100%
-              </p>
-              <div className="text-sm space-y-1">
-                <p>LHVgas = Lower heating value of syngas (MJ/Nm3) | القيمة الحرارية المنخفضة للغاز التركيبي (ميغاجول/ن.م3)</p>
-                <p>Vgas = Syngas volume flow rate (Nm3/h) | معدل تدفق حجم الغاز التركيبي (ن.م3/ساعة)</p>
-                <p>LHVbiomass = Heating value of biomass (MJ/kg) | القيمة الحرارية للكتلة الحيوية (ميغاجول/كجم)</p>
-                <p>mbiomass = Biomass mass flow rate (kg/h) | معدل تدفق كتلة الكتلة الحيوية (كجم/ساعة)</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-purple-50 p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-bold mb-4">Example: Date Palm Residue Gasifier | مثال: غازي بقايا نخيل التمر</h3>
-            <div className="space-y-3 text-sm">
-              <div className="bg-white p-4 rounded shadow">
-                <p className="font-bold mb-2 text-purple-700">Given Parameters | المعطيات:</p>
-                <p>Date palm waste input: 500 kg/h | مدخل بقايا نخيل التمر: 500 كجم/ساعة</p>
-                <p>LHV of biomass: 17 MJ/kg (dry basis) | القيمة الحرارية المنخفضة للكتلة الحيوية: 17 ميغاجول/كجم (أساس جاف)</p>
-                <p>Syngas production: 1,200 Nm3/h | إنتاج الغاز التركيبي: 1,200 ن.م3/ساعة</p>
-                <p>Syngas composition: H2=18%, CO=22%, CH4=2%, CO2=10%, N2=48% | تركيب الغاز التركيبي: H2=18%، CO=22%، CH4=2%، CO2=10%، N2=48%</p>
-                <p>Gas engine efficiency: 38% | كفاءة محرك الغاز: 38%</p>
-              </div>
-              <div className="bg-white p-4 rounded border-l-4 border-orange-500">
-                <p className="font-bold mb-3 text-orange-700">Calculation Steps | خطوات الحساب:</p>
-                <p className="font-semibold mb-1">1. Calculate LHV of syngas | حساب القيمة الحرارية المنخفضة للغاز التركيبي:</p>
-                <p className="mb-1 ml-4">LHV components: H2=10.8, CO=12.6, CH4=35.8 MJ/Nm3 | مكونات القيمة الحرارية المنخفضة: H2=10.8، CO=12.6، CH4=35.8 ميغاجول/ن.م3</p>
-                <p className="mb-3 ml-4">
-                  LHVgas = (0.18×10.8 + 0.22×12.6 + 0.02×35.8) = <span className="font-bold text-blue-600">4.42 MJ/Nm3 | 4.42 ميغاجول/ن.م3</span>
-                </p>
-                <p className="font-semibold mb-1">2. Energy in syngas | الطاقة في الغاز التركيبي:</p>
-                <p className="mb-3 ml-4">
-                  Egas = 1,200 Nm3/h × 4.42 MJ/Nm3 = <span className="font-bold text-blue-600">5,304 MJ/h | 5,304 ميغاجول/ساعة</span>
-                </p>
-                <p className="font-semibold mb-1">3. Energy in biomass | الطاقة في الكتلة الحيوية:</p>
-                <p className="mb-3 ml-4">
-                  Ebiomass = 500 kg/h × 17 MJ/kg = <span className="font-bold text-blue-600">8,500 MJ/h | 8,500 ميغاجول/ساعة</span>
-                </p>
-                <p className="font-semibold mb-1">4. Cold Gas Efficiency | كفاءة الغاز البارد:</p>
-                <p className="mb-3 ml-4">
-                  CGE = (5,304 / 8,500) × 100% = <span className="font-bold text-orange-600 text-lg">62.4% | 62.4%</span>
-                </p>
-                <p className="font-semibold mb-1">5. Electrical power output | إخراج القدرة الكهربائية:</p>
-                <p className="mb-1 ml-4">Pelec = (5,304 MJ/h / 3.6) × 0.38</p>
-                <p className="ml-4">= <span className="font-bold text-green-600 text-xl">560 kW (0.56 MW) | 560 كيلووات (0.56 ميغاوات)</span></p>
-              </div>
-              <div className="bg-green-100 p-4 rounded">
-                <p className="font-bold text-green-800 mb-2">Overall System Efficiency | الكفاءة الإجمالية للنظام:</p>
-                <p>η = CGE × ηengine = 62.4% × 38% = <span className="font-bold text-lg">23.7% | 23.7%</span></p>
-                <p className="text-xs text-gray-600 mt-2">Note: With CHP, total efficiency can reach 70-80% | ملاحظة: مع CHP، يمكن أن تصل الكفاءة الإجمالية إلى 70-80%</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Energy Storage Technologies | تقنيات تخزين الطاقة",
-      subtitle: "Integration with Biomass | التكامل مع الكتلة الحيوية",
-      content: (
-        <div className="space-y-6">
-          <div className="bg-gradient-to-r from-blue-100 to-purple-100 p-6 rounded-lg shadow-lg">
-            <h3 className="text-xl font-bold mb-4 text-center">Storage Options for Biomass Plants | خيارات التخزين لمحطات الكتلة الحيوية</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-500">
-                <h4 className="font-bold text-blue-700 mb-2 text-base">Battery Energy Storage (BESS) | تخزين الطاقة بالبطاريات (BESS)</h4>
-                <p className="text-xs mb-2">Lithium-ion, Flow batteries | بطاريات ليثيوم أيون، بطاريات تدفق</p>
-                <div className="space-y-1 text-xs">
-                  <p>Response time: Milliseconds | وقت الاستجابة: مللي ثانية</p>
-                  <p>Round-trip efficiency: 85-95% | كفاءة الدورة الكاملة: 85-95%</p>
-                  <p>Duration: 1-4 hours | المدة: 1-4 ساعات</p>
-                  <p>Capital cost: $150-340/kWh (~19,500-44,200 DZD/kWh at 130 DZD/USD) | تكلفة رأس المال: 150-340 دولار/كيلووات ساعة (~19,500-44,200 دينار جزائري/كيلووات ساعة)</p>
-                  <p className="font-semibold">Algerian suitability: High | الملاءمة الجزائرية: عالية</p>
-                </div>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-green-500">
-                <h4 className="font-bold text-green-700 mb-2 text-base">Thermal Energy Storage (TES) | تخزين الطاقة الحرارية (TES)</h4>
-                <p className="text-xs mb-2">Molten salt, Steam | ملح مذاب، بخار</p>
-                <div className="space-y-1 text-xs">
-                  <p>Response time: Minutes | وقت الاستجابة: دقائق</p>
-                  <p>Round-trip efficiency: 75-90% | كفاءة الدورة الكاملة: 75-90%</p>
-                  <p>Duration: 6-15 hours | المدة: 6-15 ساعة</p>
-                  <p>Capital cost: $20-50/kWh (~2,600-6,500 DZD/kWh) | تكلفة رأس المال: 20-50 دولار/كيلووات ساعة (~2,600-6,500 دينار جزائري/كيلووات ساعة)</p>
-                  <p className="font-semibold">Algerian suitability: Good | الملاءمة الجزائرية: جيدة</p>
-                </div>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-purple-500">
-                <h4 className="font-bold text-purple-700 mb-2 text-base">Mechanical Storage | التخزين الميكانيكي</h4>
-                <p className="text-xs mb-2">Flywheel, CAES | دولاب الموازنة، CAES</p>
-                <div className="space-y-1 text-xs">
-                  <p>Response time: Seconds | وقت الاستجابة: ثواني</p>
-                  <p>Round-trip efficiency: 70-85% | كفاءة الدورة الكاملة: 70-85%</p>
-                  <p>Duration: 0.5-24 hours | المدة: 0.5-24 ساعة</p>
-                  <p>Capital cost: $100-300/kWh (~13,000-39,000 DZD/kWh) | تكلفة رأس المال: 100-300 دولار/كيلووات ساعة (~13,000-39,000 دينار جزائري/كيلووات ساعة)</p>
-                  <p className="font-semibold">Algerian suitability: Limited | الملاءمة الجزائرية: محدودة</p>
-                </div>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-orange-500">
-                <h4 className="font-bold text-orange-700 mb-2 text-base">Hydrogen Storage | تخزين الهيدروجين</h4>
-                <p className="text-xs mb-2">Electrolysis, fuel cells | التحليل الكهربائي، خلايا الوقود</p>
-                <div className="space-y-1 text-xs">
-                  <p>Response time: Minutes | وقت الاستجابة: دقائق</p>
-                  <p>Round-trip efficiency: 40-60% | كفاءة الدورة الكاملة: 40-60%</p>
-                  <p>Duration: Seasonal | المدة: موسمية</p>
-                  <p>Capital cost: $500-1000/kWh (~65,000-130,000 DZD/kWh) | تكلفة رأس المال: 500-1000 دولار/كيلووات ساعة (~65,000-130,000 دينار جزائري/كيلووات ساعة)</p>
-                  <p className="font-semibold">Algerian suitability: Future | الملاءمة الجزائرية: مستقبلية</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500">
-            <p className="font-bold text-gray-800 mb-2 text-sm">Recommendation for Algeria | توصية للجزائر:</p>
-            <p className="text-sm">Battery storage (BESS) most suitable for small-to-medium biomass plants (0.5-5 MW) to provide grid stability and peak demand response. Integration: Store excess biomass power in batteries for non-intermittent supply, hybrid with solar/wind. | تخزين البطاريات (BESS) أنسب لمحطات الكتلة الحيوية الصغيرة إلى المتوسطة (0.5-5 ميغاوات) لتوفير استقرار الشبكة واستجابة الطلب الذروي. التكامل: تخزين الطاقة الزائدة من الكتلة الحيوية في البطاريات لتوريد غير متقطع، هجين مع الشمسية/الرياح.</p>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Storage System Calculations | حسابات نظام التخزين",
-      content: (
-        <div className="space-y-6">
-          <div className="bg-indigo-50 p-6 rounded-lg shadow-md border-2 border-indigo-500">
-            <h3 className="text-xl font-bold mb-4">Round-Trip Efficiency (RTE) | كفاءة الدورة الكاملة (RTE)</h3>
-            <div className="bg-white p-4 rounded border-2 border-indigo-400">
-              <p className="text-center text-2xl font-bold mb-4">
-                RTE = (Edischarge / Echarge) × 100%
-              </p>
-              <p className="text-center text-lg font-bold mb-2">
-                RTE = ηcharge × ηstorage × ηdischarge
-              </p>
-              <p className="text-sm text-center text-gray-600">
-                Where η represents efficiency at each stage | حيث يمثل η الكفاءة في كل مرحلة
-              </p>
-            </div>
-          </div>
-          <div className="bg-teal-50 p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-bold mb-4">Example: Battery Sizing for AD Plant | مثال: تحجيم البطارية لمحطة AD</h3>
-            <div className="space-y-3 text-sm">
-              <div className="bg-white p-4 rounded shadow">
-                <p className="font-bold mb-2 text-teal-700">System Requirements | متطلبات النظام:</p>
-                <p>AD plant capacity: 0.615 MW (updated from calculation) | سعة محطة AD: 0.615 ميغاوات</p>
-                <p>Peak demand coverage: 1 MW for 2 hours (evening peak) | تغطية الطلب الذروي: 1 ميغاوات لـ 2 ساعات</p>
-                <p>Battery round-trip efficiency: 90% | كفاءة الدورة الكاملة للبطارية: 90%</p>
-                <p>Depth of discharge (DoD): 80% | عمق التفريغ: 80%</p>
-              </div>
-              <div className="bg-white p-4 rounded border-l-4 border-teal-500">
-                <p className="font-bold mb-3 text-teal-700">Calculation Steps | خطوات الحساب:</p>
-                <p className="font-semibold mb-1">1. Energy deficit during peak | عجز الطاقة خلال الذروة:</p>
-                <p className="mb-3 ml-4">
-                  Edeficit = (1.0 MW - 0.615 MW) × 2 h = <span className="font-bold text-blue-600">0.77 MWh | 0.77 ميغاوات ساعة</span>
-                </p>
-                <p className="font-semibold mb-1">2. Required storage capacity | سعة التخزين المطلوبة:</p>
-                <p className="mb-1 ml-4">Ebattery = Edeficit / (ηdischarge × DoD)</p>
-                <p className="mb-3 ml-4">
-                  Ebattery = 0.77 MWh / (0.95 × 0.80) = <span className="font-bold text-orange-600 text-lg">1.01 MWh | 1.01 ميغاوات ساعة</span>
-                </p>
-                <p className="font-semibold mb-1">3. Charging power required | القدرة الشحن المطلوبة:</p>
-                <p className="mb-1 ml-4">Available = 0.615 MW - 0.3 MW = 0.315 MW</p>
-                <p className="mb-3 ml-4">
-                  Charging time = 1.01 MWh / (0.315 MW × 0.95) = <span className="font-bold text-blue-600">~3.4 hours | ~3.4 ساعات</span>
-                </p>
-                <p className="font-semibold mb-1">4. Capital investment (updated 2025 costs) | الاستثمار الرأسمالي:</p>
-                <p className="mb-1 ml-4">Battery cost = 1.01 MWh × $240/kWh (avg) = $242,400 (~31,512,000 DZD) | تكلفة البطارية = 1.01 ميغاوات ساعة × 240 دولار/كيلووات ساعة = 242,400 دولار (~31,512,000 دينار جزائري)</p>
-                <p className="mb-1 ml-4">Power conversion system = 1 MW × $200/kW = $200,000 (~26,000,000 DZD) | نظام تحويل القدرة = 1 ميغاوات × 200 دولار/كيلووات = 200,000 دولار (~26,000,000 دينار جزائري)</p>
-                <p className="mb-1 ml-4">Installation and BOP (25%) = ~$110,600 (~14,378,000 DZD) | التركيب وBOP (25%) = ~110,600 دولار (~14,378,000 دينار جزائري)</p>
-                <p className="ml-4">
-                  <span className="font-bold text-green-600 text-lg">Total = ~$553,000 (~71,890,000 DZD) | الإجمالي = ~553,000 دولار (~71,890,000 دينار جزائري)</span>
-                </p>
-              </div>
-              <div className="bg-green-100 p-4 rounded">
-                <p className="font-bold text-green-800 mb-2">System Performance | أداء النظام:</p>
-                <p>Round-trip efficiency: 90% | كفاءة الدورة الكاملة: 90%</p>
-                <p>Cycle life: 4,000-6,000 cycles (11-16 years at 1 cycle/day) | دورة الحياة: 4,000-6,000 دورة (11-16 سنة عند دورة واحدة/يوم)</p>
-                <p>Payback period: 8-12 years (with proper tariff) | فترة الاسترداد: 8-12 سنة (مع تعرفة مناسبة)</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Power System Integration | تكامل نظام الطاقة",
-      subtitle: "Biomass + Storage Architecture | بنية الكتلة الحيوية + التخزين",
-      content: (
-        <div className="space-y-6">
-          <div className="bg-white p-6 rounded-lg shadow-lg border-4 border-blue-600">
-            <h3 className="text-xl font-bold mb-6 text-center text-blue-700">Integrated System Diagram | رسم بياني للنظام المتكامل</h3>
-            <div className="space-y-5">
-              <div className="flex items-center justify-center gap-2">
-                <div className="w-36 bg-green-600 text-white p-3 rounded-lg text-center font-bold text-xs">
-                  Biomass Input<br/>مدخل الكتلة الحيوية<br/>MSW / Palm Waste | النفايات / بقايا النخيل
-                </div>
-                <div className="text-3xl text-gray-600">→</div>
-                <div className="w-36 bg-orange-600 text-white p-3 rounded-lg text-center font-bold text-xs">
-                  AD / Gasifier<br/>AD / غازي<br/>Biogas / Syngas | الغاز الحيوي / الغاز التركيبي
-                </div>
-              </div>
-              <div className="flex items-center justify-center">
-                <div className="text-4xl text-gray-600 font-bold">↓</div>
-              </div>
-              <div className="flex items-center justify-center gap-2">
-                <div className="w-36 bg-red-600 text-white p-3 rounded-lg text-center font-bold text-xs">
-                  Gas Engine<br/>محرك غاز<br/>35-40% eff | 35-40% كفاءة
-                </div>
-                <div className="text-3xl text-gray-600">→</div>
-                <div className="w-36 bg-purple-600 text-white p-3 rounded-lg text-center font-bold text-xs">
-                  Generator<br/>مولد<br/>96-98% eff | 96-98% كفاءة
-                </div>
-              </div>
-              <div className="flex items-center justify-center">
-                <div className="text-4xl text-gray-600 font-bold">↓</div>
-              </div>
-              <div className="flex items-center justify-center gap-3">
-                <div className="w-32 bg-blue-600 text-white p-3 rounded-lg text-center font-bold text-xs">
-                  Grid<br/>الشبكة<br/>11-30 kV | 11-30 كيلوفولت
-                </div>
-                <div className="text-2xl text-gray-500">↔</div>
-                <div className="w-32 bg-teal-600 text-white p-3 rounded-lg text-center font-bold text-xs">
-                  Battery<br/>بطارية<br/>Storage | التخزين
-                </div>
-                <div className="text-2xl text-gray-500">↔</div>
-                <div className="w-32 bg-indigo-600 text-white p-3 rounded-lg text-center font-bold text-xs">
-                  Load<br/>الحمل<br/>Consumer | المستهلك
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="bg-orange-50 p-4 rounded-lg shadow text-center">
-              <p className="font-bold text-orange-700 text-sm">Production | الإنتاج</p>
-              <p className="text-xs mt-2">Continuous | مستمر</p>
-            </div>
-            <div className="bg-blue-50 p-4 rounded-lg shadow text-center">
-              <p className="font-bold text-blue-700 text-sm">Generation | التوليد</p>
-              <p className="text-xs mt-2">0.5-5 MW range | نطاق 0.5-5 ميغاوات</p>
-            </div>
-            <div className="bg-green-50 p-4 rounded-lg shadow text-center">
-              <p className="font-bold text-green-700 text-sm">Storage | التخزين</p>
-              <p className="text-xs mt-2">2-4 hour capacity | سعة 2-4 ساعات</p>
-            </div>
-          </div>
-          <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-600">
-            <p className="font-bold text-gray-800 mb-2 text-sm">Integration Benefits | فوائد التكامل:</p>
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <p>✓ Baseload renewable generation | توليد متجدد أساسي</p>
-              <p>✓ Peak demand support | دعم الطلب الذروي</p>
-              <p>✓ Grid frequency regulation | تنظيم تردد الشبكة</p>
-              <p>✓ Reduced curtailment losses | تقليل خسائر التقييد</p>
-              <p>✓ Hybrid stability with batteries | استقرار هجين مع البطاريات</p>
-              <p>✓ Waste-to-energy sustainability | استدامة النفايات إلى طاقة</p>
-            </div>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Algerian Case Study: Potential Sites | دراسة حالة جزائرية: المواقع المحتملة",
-      content: (
-        <div className="space-y-5">
-          <div className="bg-gradient-to-r from-green-50 to-blue-50 p-5 rounded-lg shadow-lg">
-            <h3 className="text-xl font-bold mb-4 text-center">Priority Locations | المواقع ذات الأولوية</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-green-500">
-                <h4 className="font-bold text-green-700 mb-2">1. Algiers Region | 1. منطقة الجزائر</h4>
-                <div className="space-y-1 text-xs">
-                  <p>MSW available: ~2-3M tons/year | النفايات المتاحة: ~2-3 مليون طن/سنة</p>
-                  <p>Technology: Anaerobic Digestion | التقنية: الهضم اللاهوائي</p>
-                  <p>Potential capacity: 15-20 MW | السعة المحتملة: 15-20 ميغاوات</p>
-                  <p>Current status: Planning phase | الوضع الحالي: مرحلة التخطيط</p>
-                  <p>Grid connection: Excellent (30 kV) | الاتصال بالشبكة: ممتاز (30 كيلوفولت)</p>
-                </div>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-orange-500">
-                <h4 className="font-bold text-orange-700 mb-2">2. Biskra | 2. بسكرة</h4>
-                <div className="space-y-1 text-xs">
-                  <p>Biomass: ~500,000 tons/year palm waste | الكتلة الحيوية: ~500,000 طن/سنة بقايا نخيل</p>
-                  <p>Technology: Gasification | التقنية: الغازية</p>
-                  <p>Potential capacity: 8-12 MW | السعة المحتملة: 8-12 ميغاوات</p>
-                  <p>Current status: Feasibility study | الوضع الحالي: دراسة جدوى</p>
-                  <p>Grid connection: Good (60 kV) | الاتصال بالشبكة: جيد (60 كيلوفولت)</p>
-                </div>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-500">
-                <h4 className="font-bold text-blue-700 mb-2">3. Oran Region | 3. منطقة وهران</h4>
-                <div className="space-y-1 text-xs">
-                  <p>MSW available: ~1.2-1.5M tons/year | النفايات المتاحة: ~1.2-1.5 مليون طن/سنة</p>
-                  <p>Technology: Anaerobic Digestion | التقنية: الهضم اللاهوائي</p>
-                  <p>Potential capacity: 10-15 MW | السعة المحتملة: 10-15 ميغاوات</p>
-                  <p>Current status: Pilot project active | الوضع الحالي: مشروع تجريبي نشط</p>
-                  <p>Grid connection: Very good (30 kV) | الاتصال بالشبكة: جيد جداً (30 كيلوفولت)</p>
-                </div>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-purple-500">
-                <h4 className="font-bold text-purple-700 mb-2">4. Constantine | 4. قسنطينة</h4>
-                <div className="space-y-1 text-xs">
-                  <p>MSW available: ~0.8-1M tons/year | النفايات المتاحة: ~0.8-1 مليون طن/سنة</p>
-                  <p>Technology: Anaerobic Digestion | التقنية: الهضم اللاهوائي</p>
-                  <p>Potential capacity: 6-10 MW | السعة المحتملة: 6-10 ميغاوات</p>
-                  <p>Current status: Early planning | الوضع الحالي: تخطيط مبكر</p>
-                  <p>Grid connection: Adequate (30 kV) | الاتصال بالشبكة: كافٍ (30 كيلوفولت)</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white p-5 rounded-lg shadow-md">
-            <h4 className="font-bold mb-3">Total National Potential (2025-2035) | الإمكانية الوطنية الإجمالية (2025-2035)</h4>
-            <div className="grid grid-cols-4 gap-3">
-              <div className="bg-green-50 p-3 rounded text-center">
-                <p className="text-2xl font-bold text-green-600">50-70</p>
-                <p className="text-xs font-semibold mt-1">MW Capacity | سعة ميغاوات</p>
-              </div>
-              <div className="bg-blue-50 p-3 rounded text-center">
-                <p className="text-2xl font-bold text-blue-600">400-560</p>
-                <p className="text-xs font-semibold mt-1">GWh/year | جيجاوات ساعة/سنة</p>
-              </div>
-              <div className="bg-orange-50 p-3 rounded text-center">
-                <p className="text-2xl font-bold text-orange-600">1-2%</p>
-                <p className="text-xs font-semibold mt-1">National Demand | الطلب الوطني</p>
-              </div>
-              <div className="bg-purple-50 p-3 rounded text-center">
-                <p className="text-2xl font-bold text-purple-600">$150-250M (~19.5-32.5B DZD)</p>
-                <p className="text-xs font-semibold mt-1">Investment | الاستثمار</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500">
-            <p className="text-sm font-semibold text-gray-800">
-              Priority: MSW-based AD plants in major cities (Algiers, Oran, Constantine) due to waste management co-benefits and existing grid infrastructure. | الأولوية: محطات AD القائمة على النفايات في المدن الكبرى (الجزائر، وهران، قسنطينة) بسبب فوائد إدارة النفايات والشبكة الحالية.
-            </p>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Conclusions and Recommendations | الاستنتاجات والتوصيات",
-      content: (
-        <div className="space-y-5">
-          <div className="bg-gradient-to-r from-green-100 to-blue-100 p-5 rounded-lg shadow-lg">
-            <h3 className="text-xl font-bold mb-4 text-center text-gray-800">Key Findings | النتائج الرئيسية</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-green-500">
-                <h4 className="font-bold text-green-700 mb-2">Technical Performance | الأداء الفني</h4>
-                <div className="space-y-1 text-sm">
-                  <p>AD efficiency: 30-40% | كفاءة AD: 30-40%</p>
-                  <p>Gasification efficiency: 45-50% | كفاءة الغازية: 45-50%</p>
-                  <p>Storage RTE: 85-95% (batteries) | RTE للتخزين: 85-95% (البطاريات)</p>
-                  <p>Combined system: 25-35% overall | النظام المجمع: 25-35% إجمالي</p>
-                </div>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-500">
-                <h4 className="font-bold text-blue-700 mb-2">Economic Viability | الجدوى الاقتصادية</h4>
-                <div className="space-y-1 text-sm">
-                  <p>LCOE: $0.10-0.15/kWh (~13-19.5 DZD/kWh) | LCOE: 0.10-0.15 دولار/كيلووات ساعة (~13-19.5 دينار جزائري/كيلووات ساعة)</p>
-                  <p>Payback: 8-15 years | الاسترداد: 8-15 سنة</p>
-                  <p>Job creation: 15-25 jobs/MW | إنشاء فرص عمل: 15-25 وظيفة/ميغاوات</p>
-                  <p>Waste management savings | توفير في إدارة النفايات</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white p-5 rounded-lg shadow-md">
-            <h4 className="font-bold mb-3 text-gray-800">Recommendations for Algeria | توصيات للجزائر</h4>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <div className="bg-green-50 p-3 rounded-lg border-l-4 border-green-500">
-                  <p className="font-bold text-green-700 mb-2 text-sm">Short-term (2025-2028) | قصير الأجل (2025-2028)</p>
-                  <div className="text-xs space-y-1">
-                    <p>✓ Prioritize AD for MSW in major cities | أولوية AD للنفايات في المدن الكبرى</p>
-                    <p>✓ Pilot 3-5 MW plants in Algiers, Oran | مشاريع تجريبية 3-5 ميغاوات في الجزائر، وهران</p>
-                    <p>✓ Develop regulatory framework and tariffs | تطوير إطار تنظيمي وتعرفات</p>
-                    <p>✓ Train local engineers and operators | تدريب المهندسين والمشغلين المحليين</p>
-                  </div>
-                </div>
-                <div className="bg-orange-50 p-3 rounded-lg border-l-4 border-orange-500">
-                  <p className="font-bold text-orange-700 mb-2 text-sm">Technology Selection | اختيار التقنية</p>
-                  <div className="text-xs space-y-1">
-                    <p>✓ AD for wet MSW (moisture over 40%) | AD للنفايات الرطبة (رطوبة أكثر من 40%)</p>
-                    <p>✓ Gasification for dry agricultural waste | الغازية لبقايا زراعية جافة</p>
-                    <p>✓ Battery storage for plants under 5 MW | تخزين بطاريات لمحطات تحت 5 ميغاوات</p>
-                    <p>✓ CHP systems for maximum efficiency | أنظمة CHP لأقصى كفاءة</p>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <div className="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-500">
-                  <p className="font-bold text-blue-700 mb-2 text-sm">Medium-term (2028-2035) | متوسط الأجل (2028-2035)</p>
-                  <div className="text-xs space-y-1">
-                    <p>✓ Scale to 50-70 MW national capacity | توسيع إلى 50-70 ميغاوات سعة وطنية</p>
-                    <p>✓ Develop gasification for date palm waste | تطوير الغازية لبقايا نخيل التمر</p>
-                    <p>✓ Integrate with solar/wind microgrids | التكامل مع شبكات صغيرة شمسية/رياح</p>
-                    <p>✓ Establish local manufacturing | إنشاء تصنيع محلي</p>
-                  </div>
-                </div>
-                <div className="bg-purple-50 p-3 rounded-lg border-l-4 border-purple-500">
-                  <p className="font-bold text-purple-700 mb-2 text-sm">Policy and Financing | السياسة والتمويل</p>
-                  <div className="text-xs space-y-1">
-                    <p>✓ Feed-in tariff: $0.12-0.15/kWh (~15.6-19.5 DZD/kWh) | تعرفة التغذية: 0.12-0.15 دولار/كيلووات ساعة (~15.6-19.5 دينار جزائري/كيلووات ساعة)</p>
-                    <p>✓ Tax incentives for investors | حوافز ضريبية للمستثمرين</p>
-                    <p>✓ Public-private partnerships | شراكات عامة-خاصة</p>
-                    <p>✓ International climate financing | تمويل دولي للمناخ</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="bg-gradient-to-r from-yellow-50 to-orange-50 p-4 rounded-lg border-2 border-orange-400">
-            <p className="font-bold text-gray-800 mb-2 text-center">Strategic Importance | الأهمية الاستراتيجية</p>
-            <p className="text-sm text-center">
-              Biomass energy can help Algeria achieve its 27% renewable target by 2035 while addressing urban waste management challenges. Combined with storage, it provides reliable baseload power complementing intermittent solar and wind resources. | يمكن أن تساعد طاقة الكتلة الحيوية الجزائر في تحقيق هدف 27% طاقة متجددة بحلول 2035 مع معالجة تحديات إدارة النفايات الحضرية. مجتمعة مع التخزين، توفر طاقة أساسية موثوقة تكمل الموارد الشمسية والرياح المتقطعة.
-            </p>
-          </div>
-        </div>
-      )
-    }
-  ];
+### Part 1: Content Preview (Slide by Slide)
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
+Here is how the content is structured in your presentation:
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
+**Slide 1: Title Slide**
 
-  return (
-    <div className="w-full h-screen bg-gradient-to-br from-gray-900 to-blue-900 flex flex-col">
-      <div className="bg-gradient-to-r from-green-700 to-blue-700 text-white px-8 py-4 shadow-lg">
-        <h1 className="text-2xl font-bold">Biomass Electricity Generation and Storage | توليد الكهرباء من الكتلة الحيوية والتخزين</h1>
-        <p className="text-sm text-blue-100">Algerian Context - Department of Electrical and Renewable Energy Engineering | السياق الجزائري - قسم الهندسة الكهربائية وطاقات متجددة</p>
-      </div>
-      <div className="flex-1 flex items-center justify-center p-8">
-        <div className="bg-white rounded-xl shadow-2xl w-full max-w-6xl h-full flex flex-col">
-          <div className="bg-gradient-to-r from-green-600 to-blue-600 text-white px-8 py-6 rounded-t-xl">
-            <h2 className="text-3xl font-bold mb-2">{slides[currentSlide].title}</h2>
-            {slides[currentSlide].subtitle && (
-              <p className="text-lg text-blue-100">{slides[currentSlide].subtitle}</p>
-            )}
-          </div>
-          <div className="flex-1 overflow-y-auto p-8">
-            {slides[currentSlide].content}
-          </div>
-          <div className="border-t border-gray-200 px-8 py-4 flex items-center justify-between bg-gray-50 rounded-b-xl">
-            <button
-              onClick={prevSlide}
-              className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={currentSlide === 0}
-            >
-              <ChevronLeft className="w-5 h-5" />
-              Previous | السابق
-            </button>
-            <div className="flex items-center gap-2">
-              <span className="text-gray-600 font-medium">
-                Slide {currentSlide + 1} of {slides.length} | الشريحة {currentSlide + 1} من {slides.length}
-              </span>
-              <div className="flex gap-1 ml-4">
-                {slides.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentSlide(index)}
-                    className={`w-2 h-2 rounded-full transition-all ${
-                      index === currentSlide ? 'bg-green-600 w-8' : 'bg-gray-300'
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-            <button
-              onClick={nextSlide}
-              className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={currentSlide === slides.length - 1}
-            >
-              Next | التالي
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+  * **Title:** Biomass Electricity Generation and Storage | توليد الكهرباء من الكتلة الحيوية والتخزين
+  * **Subtitle:** Technologies, Efficiency, and Algerian Potential
+  * **By:** Kosai Zouaoui & Abderrahmane Slama
+  * **Dept:** Electrical and Renewable Energy Engineering
+  * **Date:** November 2025
 
-export default BiomassPresentation;
+**Slide 2: Abbreviations**
+
+  * **Table:** Lists MSW, AD, LHV, CGE, RTE, BESS, etc., with English and Arabic translations.
+
+**Slide 3: Introduction**
+
+  * **Definition:** Biomass = Organic materials (MSW, residues).
+  * **Global:** \~151 GW capacity (2024). Main benefit: Baseload power.
+  * **Algerian Context:**
+      * MSW: 13-15M tons/year.
+      * Date Palm Residues: \~500k tons/year (Biskra).
+      * Target: Aligns with 27% renewable target by 2035.
+
+**Slide 4: Full Process**
+
+  * **Anaerobic Digestion (AD):** Collection -\> Hydrolysis -\> Acidogenesis -\> Acetogenesis -\> Methanogenesis -\> Electricity.
+  * **Gasification:** Drying -\> Pyrolysis -\> Oxidation -\> Reduction -\> Syngas Cleaning -\> Electricity.
+
+**Slide 5: Methods (Global vs Algeria)**
+
+  * **Combustion:** 90% Global use, but minimal in Algeria (requires dry waste).
+  * **AD:** Primary focus for Algeria (suited for wet MSW).
+  * **Gasification:** Emerging option for dry agricultural residues.
+
+**Slide 6: Anaerobic Digestion (Deep Dive)**
+
+  * **4 Stages:** Hydrolysis, Acidogenesis, Acetogenesis, Methanogenesis.
+  * **Biogas Composition:** CH4 (55-70%), CO2 (30-45%).
+  * **Energy:** LHV 20-25 MJ/m³.
+
+**Slide 7: Gasification Technology**
+
+  * **Flow:** Dry Biomass -\> Gasifier (700-1200°C) -\> Syngas (CO + H2) -\> Engine.
+  * **Efficiency:** 45-50% overall electrical efficiency possible.
+
+**Slide 8: Efficiency Calculation (AD)**
+
+  * **Scenario:** 100 tons/day MSW.
+  * **Result:** 615 kW output.
+  * **System Efficiency:** 31.5-36%.
+
+**Slide 9: Efficiency Calculation (Gasification)**
+
+  * **Scenario:** 500 kg/h Date Palm Waste.
+  * **Result:** 560 kW output.
+  * **Cold Gas Efficiency:** 62.4%.
+
+**Slide 10: Energy Storage Technologies**
+
+  * **BESS (Batteries):** High suitability for Algeria. Fast response, high efficiency (85-95%).
+  * **TES (Thermal):** Good suitability.
+  * **Recommendation:** Batteries for small plants (0.5-5 MW).
+
+**Slide 11: Storage Calculations**
+
+  * **Goal:** Cover 1 MW peak demand for 2 hours using a 0.615 MW plant.
+  * **Battery Needed:** \~1.01 MWh capacity.
+  * **Cost:** \~$553,000 USD (\~71M DZD).
+
+**Slide 12: Power System Integration**
+
+  * **Diagram:** Biomass Input -\> AD/Gasifier -\> Engine -\> Grid \<-\> Battery \<-\> Load.
+  * **Benefits:** Baseload generation + Peak shaving.
+
+**Slide 13: Algerian Potential Sites**
+
+  * **Algiers:** AD (15-20 MW) using MSW.
+  * **Biskra:** Gasification (8-12 MW) using Palm waste.
+  * **Oran:** AD (10-15 MW).
+  * **Constantine:** AD (6-10 MW).
+
+**Slide 14: Conclusions**
+
+  * **Tech:** AD is best for wet waste; Gasification for dry.
+  * **Policy:** Needs Feed-in Tariff ($0.12-0.15/kWh).
+  * **Strategy:** Crucial for 2035 targets and waste management.
+
+-----
+
+### Part 2: Playable Standalone File
+
+I have converted your React code into a single HTML file.
+
+1.  Copy the code below.
+2.  Save it as `biomass_presentation.html` on your computer.
+3.  Double-click it to open it in any web browser.
+
+*Note: I replaced the `lucide-react` icons with standard Emojis (🍃, ⚡, 🔋) so this file runs instantly without needing a build server.*
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biomass Presentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-900">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        // Using emoji components to replace Lucide icons for standalone compatibility
+        const Leaf = ({className}) => <span className={className} style={{fontSize: '2em'}}>🍃</span>;
+        const Zap = ({className}) => <span className={className} style={{fontSize: '2em'}}>⚡</span>;
+        const Battery = ({className}) => <span className={className} style={{fontSize: '2em'}}>🔋</span>;
+        const Globe = ({className}) => <span className={className}>🌍</span>;
+        const Factory = ({className}) => <span className={className}>🏭</span>;
+        const ChevronLeft = ({className}) => <span className={className}>◀</span>;
+        const ChevronRight = ({className}) => <span className={className}>▶</span>;
+
+        const BiomassPresentation = () => {
+            const [currentSlide, setCurrentSlide] = useState(0);
+
+            // Abbreviations slide content
+            const abbreviations = [
+                { abbr: 'MSW', en: 'Municipal Solid Waste', ar: 'النفايات الصلبة البلدية' },
+                { abbr: 'AD', en: 'Anaerobic Digestion', ar: 'الهضم اللاهوائي' },
+                { abbr: 'LHV', en: 'Lower Heating Value', ar: 'القيمة الحرارية المنخفضة' },
+                { abbr: 'CGE', en: 'Cold Gas Efficiency', ar: 'كفاءة الغاز البارد' },
+                { abbr: 'RTE', en: 'Round-Trip Efficiency', ar: 'كفاءة الدورة الكاملة' },
+                { abbr: 'BESS', en: 'Battery Energy Storage System', ar: 'نظام تخزين الطاقة بالبطاريات' },
+                { abbr: 'TES', en: 'Thermal Energy Storage', ar: 'تخزين الطاقة الحرارية' },
+                { abbr: 'CAES', en: 'Compressed Air Energy Storage', ar: 'تخزين الطاقة بالهواء المضغوط' },
+                { abbr: 'CHP', en: 'Combined Heat and Power', ar: 'التوليد المشترك للحرارة والكهرباء' },
+                { abbr: 'LCOE', en: 'Levelized Cost of Energy', ar: 'تكلفة الطاقة المستوية' },
+            ];
+
+            const slides = [
+                {
+                title: "Biomass Electricity Generation and Storage | توليد الكهرباء من الكتلة الحيوية والتخزين",
+                subtitle: "Technologies, Efficiency, and Algerian Potential | التقنيات، الكفاءة، والإمكانيات الجزائرية",
+                content: (
+                    <div className="flex flex-col items-center justify-center h-full space-y-8">
+                    <div className="flex space-x-12 justify-center items-center">
+                        <div className="text-6xl">🍃</div>
+                        <div className="text-6xl">⚡</div>
+                        <div className="text-6xl">🔋</div>
+                    </div>
+                    <div className="text-center space-y-4">
+                        <p className="text-2xl font-bold text-gray-800">Prepared by | إعداد:</p>
+                        <p className="text-xl text-gray-700">Kosai Zouaoui</p>
+                        <p className="text-xl text-gray-700">Abderrahmane Slama</p>
+                        <p className="text-lg text-gray-600 mt-6">Department of Electrical and Renewable Energy Engineering | قسم الهندسة الكهربائية وطاقات متجددة</p>
+                        <p className="text-lg text-gray-600">November 2025 | نوفمبر 2025</p>
+                    </div>
+                    </div>
+                )
+                },
+                {
+                title: "Abbreviations and Explanations | الاختصارات والتفسيرات",
+                content: (
+                    <div className="space-y-6">
+                    <p className="text-lg text-gray-700">Key terms used in this presentation | المصطلحات الرئيسية المستخدمة في هذا العرض:</p>
+                    <table className="w-full border-collapse">
+                        <thead>
+                        <tr className="bg-gray-200">
+                            <th className="border px-4 py-2">Abbr. | الاختصار</th>
+                            <th className="border px-4 py-2">English | الإنجليزية</th>
+                            <th className="border px-4 py-2">Arabic | العربية</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {abbreviations.map((item, index) => (
+                            <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : ''}>
+                            <td className="border px-4 py-2 font-bold">{item.abbr}</td>
+                            <td className="border px-4 py-2">{item.en}</td>
+                            <td className="border px-4 py-2" dir="rtl">{item.ar}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                    </div>
+                )
+                },
+                {
+                title: "Introduction to Biomass Energy | مقدمة في طاقة الكتلة الحيوية",
+                content: (
+                    <div className="space-y-6">
+                    <div className="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg shadow-md">
+                        <h3 className="text-xl font-bold mb-4 text-green-700">What is Biomass? | ما هي الكتلة الحيوية؟</h3>
+                        <p className="text-lg mb-4">Biomass = organic materials (MSW, agricultural waste, residues) | الكتلة الحيوية = مواد عضوية (النفايات الصلبة البلدية، نفايات زراعية، بقايا)</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-6">
+                        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
+                        <h4 className="font-bold text-blue-700 mb-3 flex items-center gap-2">
+                            <Globe className="w-5 h-5" />
+                            Global Context | السياق العالمي
+                        </h4>
+                        <div className="space-y-2 text-sm">
+                            <p>Provides approximately 4.4% of global renewable electricity capacity in 2024, projected to ~5-6% by 2025 | توفر حوالي 4.4% من سعة الكهرباء المتجددة العالمية في 2024، متوقعة ~5-6% بحلول 2025</p>
+                            <p>Total capacity: approximately 151 GW worldwide in 2024, expected 155-160 GW by 2025 | السعة الإجمالية: حوالي 151 جيجاوات عالمياً في 2024، متوقع 155-160 جيجاوات بحلول 2025</p>
+                            <p className="font-semibold">Key advantage: Baseload renewable power (non-intermittent) | الميزة الرئيسية: طاقة متجددة أساسية (غير متقطعة)</p>
+                        </div>
+                        </div>
+                        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
+                        <h4 className="font-bold text-green-700 mb-3 flex items-center gap-2">
+                            <Factory className="w-5 h-5" />
+                            Algerian Context | السياق الجزائري
+                        </h4>
+                        <div className="space-y-2 text-sm">
+                            <p>Algeria produces ~13-15M tons MSW per year in 2025 (projected from 10M in earlier years) | تنتج الجزائر ~13-15 مليون طن نفايات صلبة بلدية سنوياً في 2025</p>
+                            <p>Large date palm residues available (~500,000 tons/year in regions like Biskra) | بقايا نخيل التمر المتاحة الكبيرة (~500,000 طن/سنة في مناطق مثل بسكرة)</p>
+                            <p>Potential: 50-70 MW capacity, contributing 1-2% of national electricity demand | الإمكانية: 50-70 ميغاوات سعة، مساهمة 1-2% من الطلب الوطني على الكهرباء</p>
+                            <p>Aligns with Algeria 27% renewable target by 2035 (15-20 GW renewable capacity) | يتوافق مع هدف الجزائر 27% طاقة متجددة بحلول 2035 (15-20 جيجاوات سعة متجددة)</p>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="bg-yellow-50 p-5 rounded-lg border-l-4 border-yellow-500">
+                        <p className="text-lg font-semibold text-gray-800">
+                        Biomass offers Algeria a reliable, sustainable pathway to diversify its energy mix and utilize abundant organic waste resources. | توفر الكتلة الحيوية للجزائر مساراً موثوقاً ومستداماً لتنويع مزيج الطاقة واستخدام موارد النفايات العضوية الوفيرة.
+                        </p>
+                    </div>
+                    </div>
+                )
+                },
+                {
+                title: "Full Process: From Biomass to Electricity | العملية الكاملة: من الكتلة الحيوية إلى الكهرباء",
+                subtitle: "Detailed Steps for Conversion | الخطوات التفصيلية للتحويل",
+                content: (
+                    <div className="space-y-6">
+                    <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-green-500">
+                        <h3 className="text-xl font-bold mb-4 text-center text-green-700">Anaerobic Digestion Process | عملية الهضم اللاهوائي</h3>
+                        <ol className="list-decimal space-y-4 text-sm ml-6">
+                        <li><strong>Collection and Pre-treatment</strong>: Gather biomass (e.g., MSW, agricultural waste), sort, shred, and mix with water. | جمع ومعالجة مسبقة: جمع الكتلة الحيوية (مثل النفايات الصلبة البلدية، نفايات زراعية)، فرز، تمزيق، وخلط مع الماء.</li>
+                        <li><strong>Hydrolysis</strong>: Bacteria break down complex organics into simple sugars, amino acids, fatty acids. | التحلل المائي: البكتيريا تكسر المواد العضوية المعقدة إلى سكريات بسيطة، أحماض أمينية، أحماض دهنية.</li>
+                        <li><strong>Acidogenesis</strong>: Conversion to volatile fatty acids (VFAs), alcohols, H2, CO2. | تكوين الأحماض: تحويل إلى أحماض دهنية متطايرة، كحوليات، H2، CO2.</li>
+                        <li><strong>Acetogenesis</strong>: VFAs to acetic acid, H2, CO2. | تكوين الأسيتات: الأحماض الدهنية المتطايرة إلى حمض أسيتيك، H2، CO2.</li>
+                        <li><strong>Methanogenesis</strong>: Produce methane (CH4) and CO2 (biogas). | تكوين الميثان: إنتاج الميثان (CH4) وCO2 (الغاز الحيوي).</li>
+                        <li><strong>Biogas Utilization</strong>: Clean biogas, burn in gas engine or turbine to generate electricity. | استخدام الغاز الحيوي: تنظيف الغاز الحيوي، حرقه في محرك غاز أو توربين لتوليد الكهرباء.</li>
+                        <li><strong>Digestate Management</strong>: Use residue as fertilizer. | إدارة المتبقي: استخدام البقايا كسماد.</li>
+                        </ol>
+                    </div>
+                    <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-orange-500">
+                        <h3 className="text-xl font-bold mb-4 text-center text-orange-700">Gasification Process | عملية الغازية</h3>
+                        <ol className="list-decimal space-y-4 text-sm ml-6">
+                        <li><strong>Collection and Pre-treatment</strong>: Dry biomass (e.g., palm residues), shred to uniform size. | جمع ومعالجة مسبقة: الكتلة الحيوية الجافة (مثل بقايا النخيل)، تمزيق إلى حجم موحد.</li>
+                        <li><strong>Drying</strong>: Reduce moisture content to &lt;20%. | التجفيف: تقليل محتوى الرطوبة إلى &lt;20%.</li>
+                        <li><strong>Pyrolysis</strong>: Heat in absence of oxygen to produce char, tars, gases. | التحلل الحراري: تسخين في غياب الأكسجين لإنتاج الفحم، القطران، الغازات.</li>
+                        <li><strong>Combustion/Partial Oxidation</strong>: Limited oxygen to produce CO, H2, CO2. | الاحتراق/التأكسد الجزئي: أكسجين محدود لإنتاج CO، H2، CO2.</li>
+                        <li><strong>Cracking and Reduction</strong>: Break down tars, reduce to syngas (CO + H2). | التكسير والاختزال: تكسير القطران، اختزال إلى غاز تركيبي (CO + H2).</li>
+                        <li><strong>Syngas Cleaning</strong>: Remove impurities. | تنظيف الغاز التركيبي: إزالة الشوائب.</li>
+                        <li><strong>Electricity Generation</strong>: Burn syngas in gas engine/turbine. | توليد الكهرباء: حرق الغاز التركيبي في محرك غاز/توربين.</li>
+                        </ol>
+                    </div>
+                    </div>
+                )
+                },
+                {
+                title: "Biomass Methods (Global vs Algeria) | طرق الكتلة الحيوية (العالمي مقابل الجزائري)",
+                subtitle: "Electricity Generation Pathways | مسارات توليد الكهرباء",
+                content: (
+                    <div className="space-y-6">
+                    <div className="overflow-hidden rounded-lg shadow-lg border-2 border-gray-300">
+                        <table className="w-full">
+                        <thead className="bg-gradient-to-r from-green-600 to-blue-600 text-white">
+                            <tr>
+                            <th className="px-4 py-3 text-left">Method | الطريقة</th>
+                            <th className="px-4 py-3 text-left">Global Share | الحصة العالمية</th>
+                            <th className="px-4 py-3 text-left">Algeria | الجزائر</th>
+                            <th className="px-4 py-3 text-left">Notes | ملاحظات</th>
+                            </tr>
+                        </thead>
+                        <tbody className="text-sm">
+                            <tr className="bg-white border-b hover:bg-gray-50">
+                            <td className="px-4 py-4 font-bold text-orange-700">Direct Combustion | الاحتراق المباشر</td>
+                            <td className="px-4 py-4">~85-90% | ~85-90%</td>
+                            <td className="px-4 py-4 text-red-600 font-semibold">Minimal | ضئيل</td>
+                            <td className="px-4 py-4">Cheap but requires dry biomass | رخيص لكنه يتطلب كتلة حيوية جافة</td>
+                            </tr>
+                            <tr className="bg-gray-50 border-b hover:bg-gray-100">
+                            <td className="px-4 py-4 font-bold text-green-700">Anaerobic Digestion (AD) | الهضم اللاهوائي (AD)</td>
+                            <td className="px-4 py-4">~2-5% | ~2-5%</td>
+                            <td className="px-4 py-4 text-green-600 font-semibold">Primary | الأساسية</td>
+                            <td className="px-4 py-4">Suited for wet MSW; 30-40% efficiency | مناسب للنفايات الرطبة؛ كفاءة 30-40%</td>
+                            </tr>
+                            <tr className="bg-white border-b hover:bg-gray-50">
+                            <td className="px-4 py-4 font-bold text-purple-700">Gasification | الغازية</td>
+                            <td className="px-4 py-4">3-5% | 3-5%</td>
+                            <td className="px-4 py-4 text-blue-600 font-semibold">Emerging | ناشئة</td>
+                            <td className="px-4 py-4">High efficiency (45-50%) | كفاءة عالية (45-50%)</td>
+                            </tr>
+                            <tr className="bg-gray-50 hover:bg-gray-100">
+                            <td className="px-4 py-4 font-bold text-gray-700">Co-firing | الاحتراق المشترك</td>
+                            <td className="px-4 py-4">5-10% | 5-10%</td>
+                            <td className="px-4 py-4 text-gray-500 font-semibold">None | لا يوجد</td>
+                            <td className="px-4 py-4">Requires coal plants | يتطلب محطات فحم</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                    <div className="grid grid-cols-3 gap-4">
+                        <div className="bg-orange-50 p-4 rounded-lg shadow text-center">
+                        <p className="text-3xl font-bold text-orange-600 mb-2">~90% | ~90%</p>
+                        <p className="text-sm font-semibold">Global Combustion | الاحتراق العالمي</p>
+                        </div>
+                        <div className="bg-green-50 p-4 rounded-lg shadow text-center">
+                        <p className="text-3xl font-bold text-green-600 mb-2">Primary | الأساسية</p>
+                        <p className="text-sm font-semibold">Algeria: AD Focus | التركيز على AD في الجزائر</p>
+                        </div>
+                        <div className="bg-blue-50 p-4 rounded-lg shadow text-center">
+                        <p className="text-3xl font-bold text-blue-600 mb-2">45-50% | 45-50%</p>
+                        <p className="text-sm font-semibold">Gasification Efficiency | كفاءة الغازية</p>
+                        </div>
+                    </div>
+                    <div className="bg-blue-50 p-5 rounded-lg border-l-4 border-blue-600">
+                        <p className="font-semibold text-gray-800">
+                        Key for Algeria: Anaerobic Digestion is most suitable due to high MSW moisture content. Gasification emerging as a future option for dry agricultural residues. | المفتاح للجزائر: الهضم اللاهوائي أنسب بسبب محتوى الرطوبة العالي في النفايات. الغازية ناشئة كخيار مستقبلي لبقايا زراعية جافة.
+                        </p>
+                    </div>
+                    </div>
+                )
+                },
+                {
+                title: "Anaerobic Digestion (AD) Process | عملية الهضم اللاهوائي (AD)",
+                subtitle: "Primary Technology for Algeria | التقنية الأساسية للجزائر",
+                content: (
+                    <div className="space-y-6">
+                    <div className="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg shadow-lg">
+                        <h3 className="text-xl font-bold mb-4 text-center">Four-Stage Biochemical Process | عملية بيوكيميائية بأربع مراحل</h3>
+                        <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-white p-4 rounded-lg shadow border-l-4 border-green-500">
+                            <p className="font-bold text-green-700 text-lg mb-2">1. Hydrolysis | 1. التحلل المائي</p>
+                            <p className="text-sm">Complex organics to Simple sugars, amino acids, fatty acids | المواد العضوية المعقدة إلى سكريات بسيطة، أحماض أمينية، أحماض دهنية</p>
+                            <p className="text-xs text-gray-600 mt-2">Enzymes break down polymers | الإنزيمات تكسر البوليمرات</p>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg shadow border-l-4 border-blue-500">
+                            <p className="font-bold text-blue-700 text-lg mb-2">2. Acidogenesis | 2. تكوين الأحماض</p>
+                            <p className="text-sm">Simple compounds to Volatile Fatty Acids (VFAs) | المركبات البسيطة إلى أحماض دهنية متطايرة</p>
+                            <p className="text-xs text-gray-600 mt-2">Acidogenic bacteria produce VFAs | البكتيريا المكونة للأحماض تنتج أحماض دهنية متطايرة</p>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg shadow border-l-4 border-purple-500">
+                            <p className="font-bold text-purple-700 text-lg mb-2">3. Acetogenesis | 3. تكوين الأسيتات</p>
+                            <p className="text-sm">VFAs to Acetate + H2 + CO2 | الأحماض الدهنية المتطايرة إلى أسيتات + H2 + CO2</p>
+                            <p className="text-xs text-gray-600 mt-2">Acetogenic bacteria convert VFAs | البكتيريا المكونة للأسيتات تحول الأحماض الدهنية المتطايرة</p>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg shadow border-l-4 border-orange-500">
+                            <p className="font-bold text-orange-700 text-lg mb-2">4. Methanogenesis | 4. تكوين الميثان</p>
+                            <p className="text-sm">Acetate + H2 to CH4 + CO2 | الأسيتات + H2 إلى CH4 + CO2</p>
+                            <p className="text-xs text-gray-600 mt-2">Methanogens produce biogas | الكائنات المكونة للميثان تنتج الغاز الحيوي</p>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="bg-white p-6 rounded-lg shadow-md">
+                        <h4 className="font-bold mb-4 text-lg">Key Chemical Equations | المعادلات الكيميائية الرئيسية:</h4>
+                        <div className="space-y-3">
+                        <div className="bg-gray-100 p-4 rounded border-l-4 border-green-500">
+                            <p className="font-mono text-sm mb-1">C6H12O6 → 3CH4 + 3CO2</p>
+                            <p className="text-xs text-gray-600">Glucose fermentation | تخمير الجلوكوز</p>
+                        </div>
+                        <div className="bg-gray-100 p-4 rounded border-l-4 border-blue-500">
+                            <p className="font-mono text-sm mb-1">CH3COOH → CH4 + CO2</p>
+                            <p className="text-xs text-gray-600">Acetate cleavage (acetoclastic pathway) | تقسيم الأسيتات (مسار أسيتكلاستيك)</p>
+                        </div>
+                        <div className="bg-gray-100 p-4 rounded border-l-4 border-purple-500">
+                            <p className="font-mono text-sm mb-1">4H2 + CO2 → CH4 + 2H2O</p>
+                            <p className="text-xs text-gray-600">Hydrogenotrophic methanogenesis | تكوين الميثان الهيدروجينوتروفي</p>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-green-50 p-4 rounded-lg shadow">
+                        <p className="font-bold text-green-700 mb-2">Biogas Composition | تركيب الغاز الحيوي</p>
+                        <p className="text-sm">CH4: 55-70% | CH4: 55-70%</p>
+                        <p className="text-sm">CO2: 30-45% | CO2: 30-45%</p>
+                        <p className="text-sm">Trace: H2S, NH3 | آثار: H2S, NH3</p>
+                        </div>
+                        <div className="bg-blue-50 p-4 rounded-lg shadow">
+                        <p className="font-bold text-blue-700 mb-2">Energy Content | المحتوى الطاقي</p>
+                        <p className="text-sm">LHV: 20-25 MJ/m3 | القيمة الحرارية المنخفضة: 20-25 ميغاجول/م3</p>
+                        <p className="text-sm">Efficiency: 30-40% | الكفاءة: 30-40%</p>
+                        <p className="text-sm">Retention: 15-30 days | الاحتفاظ: 15-30 يوم</p>
+                        </div>
+                    </div>
+                    </div>
+                )
+                },
+                {
+                title: "Gasification Technology | تقنية الغازية",
+                subtitle: "Emerging Option for Dry Biomass | خيار ناشئ للكتلة الحيوية الجافة",
+                content: (
+                    <div className="space-y-6">
+                    <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-orange-500">
+                        <h3 className="text-xl font-bold mb-4 text-center text-orange-700">Gasification Process Flow | تدفق عملية الغازية</h3>
+                        <div className="flex items-center justify-around flex-wrap gap-2">
+                        <div className="text-center">
+                            <div className="w-28 h-28 bg-green-500 rounded-lg flex items-center justify-center text-white font-bold text-xs px-2">
+                            Dry Biomass<br/>كتلة حيوية جافة
+                            </div>
+                            <p className="mt-2 text-xs">Date palm waste | بقايا نخيل التمر</p>
+                        </div>
+                        <div className="text-3xl text-gray-600">→</div>
+                        <div className="text-center">
+                            <div className="w-28 h-28 bg-orange-500 rounded-lg flex items-center justify-center text-white font-bold text-xs px-2">
+                            Gasifier 700-1200°C<br/>غازي 700-1200 درجة مئوية
+                            </div>
+                            <p className="mt-2 text-xs">Partial oxidation | التأكسد الجزئي</p>
+                        </div>
+                        <div className="text-3xl text-gray-600">→</div>
+                        <div className="text-center">
+                            <div className="w-28 h-28 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-xs px-2">
+                            Syngas CO + H2<br/>غاز تركيبي CO + H2
+                            </div>
+                            <p className="mt-2 text-xs">LHV: 4-6 MJ/Nm3 | القيمة الحرارية المنخفضة: 4-6 ميغاجول/ن.م3</p>
+                        </div>
+                        <div className="text-3xl text-gray-600">→</div>
+                        <div className="text-center">
+                            <div className="w-28 h-28 bg-purple-500 rounded-lg flex items-center justify-center text-white font-bold text-xs px-2">
+                            Gas Engine<br/>محرك غاز
+                            </div>
+                            <p className="mt-2 text-xs">Electricity | الكهرباء</p>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+                        <h4 className="font-bold mb-4 text-lg">Key Gasification Reactions | التفاعلات الرئيسية في الغازية:</h4>
+                        <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-white p-3 rounded shadow">
+                            <p className="font-mono text-sm mb-1">C + O2 → CO2</p>
+                            <p className="text-xs text-gray-600">Combustion (ΔH = -394 kJ/mol) | الاحتراق (ΔH = -394 كيلوجول/مول)</p>
+                        </div>
+                        <div className="bg-white p-3 rounded shadow">
+                            <p className="font-mono text-sm mb-1">C + 0.5O2 → CO</p>
+                            <p className="text-xs text-gray-600">Partial oxidation (ΔH = -111 kJ/mol) | التأكسد الجزئي (ΔH = -111 كيلوجول/مول)</p>
+                        </div>
+                        <div className="bg-white p-3 rounded shadow">
+                            <p className="font-mono text-sm mb-1">C + H2O → CO + H2</p>
+                            <p className="text-xs text-gray-600">Water-gas reaction (ΔH = +131 kJ/mol) | تفاعل غاز الماء (ΔH = +131 كيلوجول/مول)</p>
+                        </div>
+                        <div className="bg-white p-3 rounded shadow">
+                            <p className="font-mono text-sm mb-1">C + CO2 → 2CO</p>
+                            <p className="text-xs text-gray-600">Boudouard reaction (ΔH = +172 kJ/mol) | تفاعل بودوارد (ΔH = +172 كيلوجول/مول)</p>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-3 gap-4">
+                        <div className="bg-orange-50 p-4 rounded-lg text-center shadow">
+                        <p className="text-2xl font-bold text-orange-600">45-50%</p>
+                        <p className="text-sm font-semibold mt-1">Overall Efficiency | الكفاءة الإجمالية</p>
+                        </div>
+                        <div className="bg-green-50 p-4 rounded-lg text-center shadow">
+                        <p className="text-2xl font-bold text-green-600">70-90%</p>
+                        <p className="text-sm font-semibold mt-1">Cold Gas Efficiency | كفاءة الغاز البارد</p>
+                        </div>
+                        <div className="bg-blue-50 p-4 rounded-lg text-center shadow">
+                        <p className="text-2xl font-bold text-blue-600">Emerging | ناشئة</p>
+                        <p className="text-sm font-semibold mt-1">Status in Algeria | الوضع في الجزائر</p>
+                        </div>
+                    </div>
+                    </div>
+                )
+                },
+                {
+                title: "Efficiency Calculations - Anaerobic Digestion | حسابات الكفاءة - الهضم اللاهوائي",
+                content: (
+                    <div className="space-y-6">
+                    <div className="bg-green-50 p-6 rounded-lg shadow-md border-2 border-green-500">
+                        <h3 className="text-xl font-bold mb-4">Overall AD System Efficiency | كفاءة نظام AD الإجمالية</h3>
+                        <div className="bg-white p-4 rounded border-2 border-green-400">
+                        <p className="text-center text-2xl font-bold mb-4">
+                            η = (Eelec / Ebiomass) × 100%
+                        </p>
+                        <div className="text-sm space-y-1">
+                            <p>Eelec = Electrical energy output (kWh) | Eelec = إخراج الطاقة الكهربائية (كيلووات ساعة)</p>
+                            <p>Ebiomass = Energy content of input biomass (kWh) | Ebiomass = محتوى الطاقة في الكتلة الحيوية المدخلة (كيلووات ساعة)</p>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="bg-blue-50 p-6 rounded-lg shadow-md">
+                        <h3 className="text-xl font-bold mb-4">Example: Algerian MSW Plant | مثال: محطة نفايات صلبة بلدية جزائرية</h3>
+                        <div className="space-y-3 text-sm">
+                        <div className="bg-white p-4 rounded shadow">
+                            <p className="font-bold mb-2 text-blue-700">Given Parameters | المعطيات:</p>
+                            <p>MSW input: 100 tons/day (organic fraction: 60%) | مدخل النفايات: 100 طن/يوم (الجزء العضوي: 60%)</p>
+                            <p>Biogas yield: 100-120 m3/ton organic waste (updated from research) | إنتاج الغاز الحيوي: 100-120 م3/طن نفايات عضوية</p>
+                            <p>Methane content: 55-70% | محتوى الميثان: 55-70%</p>
+                            <p>LHV of CH4: 35.8 MJ/m3 | القيمة الحرارية المنخفضة لـ CH4: 35.8 ميغاجول/م3</p>
+                            <p>Engine efficiency: 35-40% | كفاءة المحرك: 35-40%</p>
+                        </div>
+                        <div className="bg-white p-4 rounded border-l-4 border-green-500">
+                            <p className="font-bold mb-3 text-green-700">Step-by-Step Solution | الحل خطوة بخطوة:</p>
+                            <p className="font-semibold mb-1">1. Organic waste per day | النفايات العضوية يومياً:</p>
+                            <p className="mb-3 ml-4">= 100 tons × 0.6 = <span className="font-bold text-blue-600">60 tons/day | 60 طن/يوم</span></p>
+                            <p className="font-semibold mb-1">2. Total biogas production | إنتاج الغاز الحيوي الإجمالي:</p>
+                            <p className="mb-3 ml-4">= 60 tons × 110 m3/ton (avg) = <span className="font-bold text-blue-600">6,600 m3/day | 6,600 م3/يوم</span></p>
+                            <p className="font-semibold mb-1">3. Methane volume | حجم الميثان:</p>
+                            <p className="mb-3 ml-4">= 6,600 × 0.6 = <span className="font-bold text-blue-600">3,960 m3 CH4/day | 3,960 م3 CH4/يوم</span></p>
+                            <p className="font-semibold mb-1">4. Energy content | المحتوى الطاقي:</p>
+                            <p className="mb-3 ml-4">= 3,960 m3 × 35.8 MJ/m3 / 3.6 = <span className="font-bold text-blue-600">39,380 kWh/day | 39,380 كيلووات ساعة/يوم</span></p>
+                            <p className="font-semibold mb-1">5. Electrical output | الإخراج الكهربائي:</p>
+                            <p className="mb-3 ml-4">= 39,380 kWh × 0.375 (avg eff) = <span className="font-bold text-green-600 text-lg">14,768 kWh/day | 14,768 كيلووات ساعة/يوم</span></p>
+                            <p className="font-semibold mb-1">6. Average power | القدرة المتوسطة:</p>
+                            <p className="ml-4">= 14,768 kWh / 24 h = <span className="font-bold text-green-600 text-xl">615 kW (0.615 MW) | 615 كيلووات (0.615 ميغاوات)</span></p>
+                        </div>
+                        <div className="bg-yellow-50 p-4 rounded">
+                            <p className="font-bold text-yellow-800 mb-2">Overall System Efficiency | الكفاءة الإجمالية للنظام:</p>
+                            <p>η = 35-40% (engine) × 90% (biogas conversion) = <span className="font-bold text-lg">31.5-36% | 31.5-36%</span></p>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                )
+                },
+                {
+                title: "Efficiency Calculations - Gasification | حسابات الكفاءة - الغازية",
+                content: (
+                    <div className="space-y-6">
+                    <div className="bg-orange-50 p-6 rounded-lg shadow-md border-2 border-orange-500">
+                        <h3 className="text-xl font-bold mb-4">Cold Gas Efficiency (CGE) | كفاءة الغاز البارد (CGE)</h3>
+                        <div className="bg-white p-4 rounded border-2 border-orange-400">
+                        <p className="text-center text-xl font-bold mb-4">
+                            CGE = (LHVgas × Vgas) / (LHVbiomass × mbiomass) × 100%
+                        </p>
+                        <div className="text-sm space-y-1">
+                            <p>LHVgas = Lower heating value of syngas (MJ/Nm3) | القيمة الحرارية المنخفضة للغاز التركيبي (ميغاجول/ن.م3)</p>
+                            <p>Vgas = Syngas volume flow rate (Nm3/h) | معدل تدفق حجم الغاز التركيبي (ن.م3/ساعة)</p>
+                            <p>LHVbiomass = Heating value of biomass (MJ/kg) | القيمة الحرارية للكتلة الحيوية (ميغاجول/كجم)</p>
+                            <p>mbiomass = Biomass mass flow rate (kg/h) | معدل تدفق كتلة الكتلة الحيوية (كجم/ساعة)</p>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="bg-purple-50 p-6 rounded-lg shadow-md">
+                        <h3 className="text-xl font-bold mb-4">Example: Date Palm Residue Gasifier | مثال: غازي بقايا نخيل التمر</h3>
+                        <div className="space-y-3 text-sm">
+                        <div className="bg-white p-4 rounded shadow">
+                            <p className="font-bold mb-2 text-purple-700">Given Parameters | المعطيات:</p>
+                            <p>Date palm waste input: 500 kg/h | مدخل بقايا نخيل التمر: 500 كجم/ساعة</p>
+                            <p>LHV of biomass: 17 MJ/kg (dry basis) | القيمة الحرارية المنخفضة للكتلة الحيوية: 17 ميغاجول/كجم (أساس جاف)</p>
+                            <p>Syngas production: 1,200 Nm3/h | إنتاج الغاز التركيبي: 1,200 ن.م3/ساعة</p>
+                            <p>Syngas composition: H2=18%, CO=22%, CH4=2%, CO2=10%, N2=48% | تركيب الغاز التركيبي: H2=18%، CO=22%، CH4=2%، CO2=10%، N2=48%</p>
+                            <p>Gas engine efficiency: 38% | كفاءة محرك الغاز: 38%</p>
+                        </div>
+                        <div className="bg-white p-4 rounded border-l-4 border-orange-500">
+                            <p className="font-bold mb-3 text-orange-700">Calculation Steps | خطوات الحساب:</p>
+                            <p className="font-semibold mb-1">1. Calculate LHV of syngas | حساب القيمة الحرارية المنخفضة للغاز التركيبي:</p>
+                            <p className="mb-1 ml-4">LHV components: H2=10.8, CO=12.6, CH4=35.8 MJ/Nm3 | مكونات القيمة الحرارية المنخفضة: H2=10.8، CO=12.6، CH4=35.8 ميغاجول/ن.م3</p>
+                            <p className="mb-3 ml-4">
+                            LHVgas = (0.18×10.8 + 0.22×12.6 + 0.02×35.8) = <span className="font-bold text-blue-600">4.42 MJ/Nm3 | 4.42 ميغاجول/ن.م3</span>
+                            </p>
+                            <p className="font-semibold mb-1">2. Energy in syngas | الطاقة في الغاز التركيبي:</p>
+                            <p className="mb-3 ml-4">
+                            Egas = 1,200 Nm3/h × 4.42 MJ/Nm3 = <span className="font-bold text-blue-600">5,304 MJ/h | 5,304 ميغاجول/ساعة</span>
+                            </p>
+                            <p className="font-semibold mb-1">3. Energy in biomass | الطاقة في الكتلة الحيوية:</p>
+                            <p className="mb-3 ml-4">
+                            Ebiomass = 500 kg/h × 17 MJ/kg = <span className="font-bold text-blue-600">8,500 MJ/h | 8,500 ميغاجول/ساعة</span>
+                            </p>
+                            <p className="font-semibold mb-1">4. Cold Gas Efficiency | كفاءة الغاز البارد:</p>
+                            <p className="mb-3 ml-4">
+                            CGE = (5,304 / 8,500) × 100% = <span className="font-bold text-orange-600 text-lg">62.4% | 62.4%</span>
+                            </p>
+                            <p className="font-semibold mb-1">5. Electrical power output | إخراج القدرة الكهربائية:</p>
+                            <p className="mb-1 ml-4">Pelec = (5,304 MJ/h / 3.6) × 0.38</p>
+                            <p className="ml-4">= <span className="font-bold text-green-600 text-xl">560 kW (0.56 MW) | 560 كيلووات (0.56 ميغاوات)</span></p>
+                        </div>
+                        <div className="bg-green-100 p-4 rounded">
+                            <p className="font-bold text-green-800 mb-2">Overall System Efficiency | الكفاءة الإجمالية للنظام:</p>
+                            <p>η = CGE × ηengine = 62.4% × 38% = <span className="font-bold text-lg">23.7% | 23.7%</span></p>
+                            <p className="text-xs text-gray-600 mt-2">Note: With CHP, total efficiency can reach 70-80% | ملاحظة: مع CHP، يمكن أن تصل الكفاءة الإجمالية إلى 70-80%</p>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                )
+                },
+                {
+                title: "Energy Storage Technologies | تقنيات تخزين الطاقة",
+                subtitle: "Integration with Biomass | التكامل مع الكتلة الحيوية",
+                content: (
+                    <div className="space-y-6">
+                    <div className="bg-gradient-to-r from-blue-100 to-purple-100 p-6 rounded-lg shadow-lg">
+                        <h3 className="text-xl font-bold mb-4 text-center">Storage Options for Biomass Plants | خيارات التخزين لمحطات الكتلة الحيوية</h3>
+                        <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-500">
+                            <h4 className="font-bold text-blue-700 mb-2 text-base">Battery Energy Storage (BESS) | تخزين الطاقة بالبطاريات (BESS)</h4>
+                            <p className="text-xs mb-2">Lithium-ion, Flow batteries | بطاريات ليثيوم أيون، بطاريات تدفق</p>
+                            <div className="space-y-1 text-xs">
+                            <p>Response time: Milliseconds | وقت الاستجابة: مللي ثانية</p>
+                            <p>Round-trip efficiency: 85-95% | كفاءة الدورة الكاملة: 85-95%</p>
+                            <p>Duration: 1-4 hours | المدة: 1-4 ساعات</p>
+                            <p>Capital cost: $150-340/kWh (~19,500-44,200 DZD/kWh at 130 DZD/USD) | تكلفة رأس المال: 150-340 دولار/كيلووات ساعة (~19,500-44,200 دينار جزائري/كيلووات ساعة)</p>
+                            <p className="font-semibold">Algerian suitability: High | الملاءمة الجزائرية: عالية</p>
+                            </div>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-green-500">
+                            <h4 className="font-bold text-green-700 mb-2 text-base">Thermal Energy Storage (TES) | تخزين الطاقة الحرارية (TES)</h4>
+                            <p className="text-xs mb-2">Molten salt, Steam | ملح مذاب، بخار</p>
+                            <div className="space-y-1 text-xs">
+                            <p>Response time: Minutes | وقت الاستجابة: دقائق</p>
+                            <p>Round-trip efficiency: 75-90% | كفاءة الدورة الكاملة: 75-90%</p>
+                            <p>Duration: 6-15 hours | المدة: 6-15 ساعة</p>
+                            <p>Capital cost: $20-50/kWh (~2,600-6,500 DZD/kWh) | تكلفة رأس المال: 20-50 دولار/كيلووات ساعة (~2,600-6,500 دينار جزائري/كيلووات ساعة)</p>
+                            <p className="font-semibold">Algerian suitability: Good | الملاءمة الجزائرية: جيدة</p>
+                            </div>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-purple-500">
+                            <h4 className="font-bold text-purple-700 mb-2 text-base">Mechanical Storage | التخزين الميكانيكي</h4>
+                            <p className="text-xs mb-2">Flywheel, CAES | دولاب الموازنة، CAES</p>
+                            <div className="space-y-1 text-xs">
+                            <p>Response time: Seconds | وقت الاستجابة: ثواني</p>
+                            <p>Round-trip efficiency: 70-85% | كفاءة الدورة الكاملة: 70-85%</p>
+                            <p>Duration: 0.5-24 hours | المدة: 0.5-24 ساعة</p>
+                            <p>Capital cost: $100-300/kWh (~13,000-39,000 DZD/kWh) | تكلفة رأس المال: 100-300 دولار/كيلووات ساعة (~13,000-39,000 دينار جزائري/كيلووات ساعة)</p>
+                            <p className="font-semibold">Algerian suitability: Limited | الملاءمة الجزائرية: محدودة</p>
+                            </div>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-orange-500">
+                            <h4 className="font-bold text-orange-700 mb-2 text-base">Hydrogen Storage | تخزين الهيدروجين</h4>
+                            <p className="text-xs mb-2">Electrolysis, fuel cells | التحليل الكهربائي، خلايا الوقود</p>
+                            <div className="space-y-1 text-xs">
+                            <p>Response time: Minutes | وقت الاستجابة: دقائق</p>
+                            <p>Round-trip efficiency: 40-60% | كفاءة الدورة الكاملة: 40-60%</p>
+                            <p>Duration: Seasonal | المدة: موسمية</p>
+                            <p>Capital cost: $500-1000/kWh (~65,000-130,000 DZD/kWh) | تكلفة رأس المال: 500-1000 دولار/كيلووات ساعة (~65,000-130,000 دينار جزائري/كيلووات ساعة)</p>
+                            <p className="font-semibold">Algerian suitability: Future | الملاءمة الجزائرية: مستقبلية</p>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500">
+                        <p className="font-bold text-gray-800 mb-2 text-sm">Recommendation for Algeria | توصية للجزائر:</p>
+                        <p className="text-sm">Battery storage (BESS) most suitable for small-to-medium biomass plants (0.5-5 MW) to provide grid stability and peak demand response. Integration: Store excess biomass power in batteries for non-intermittent supply, hybrid with solar/wind. | تخزين البطاريات (BESS) أنسب لمحطات الكتلة الحيوية الصغيرة إلى المتوسطة (0.5-5 ميغاوات) لتوفير استقرار الشبكة واستجابة الطلب الذروي. التكامل: تخزين الطاقة الزائدة من الكتلة الحيوية في البطاريات لتوريد غير متقطع، هجين مع الشمسية/الرياح.</p>
+                    </div>
+                    </div>
+                )
+                },
+                {
+                title: "Storage System Calculations | حسابات نظام التخزين",
+                content: (
+                    <div className="space-y-6">
+                    <div className="bg-indigo-50 p-6 rounded-lg shadow-md border-2 border-indigo-500">
+                        <h3 className="text-xl font-bold mb-4">Round-Trip Efficiency (RTE) | كفاءة الدورة الكاملة (RTE)</h3>
+                        <div className="bg-white p-4 rounded border-2 border-indigo-400">
+                        <p className="text-center text-2xl font-bold mb-4">
+                            RTE = (Edischarge / Echarge) × 100%
+                        </p>
+                        <p className="text-center text-lg font-bold mb-2">
+                            RTE = ηcharge × ηstorage × ηdischarge
+                        </p>
+                        <p className="text-sm text-center text-gray-600">
+                            Where η represents efficiency at each stage | حيث يمثل η الكفاءة في كل مرحلة
+                        </p>
+                        </div>
+                    </div>
+                    <div className="bg-teal-50 p-6 rounded-lg shadow-md">
+                        <h3 className="text-xl font-bold mb-4">Example: Battery Sizing for AD Plant | مثال: تحجيم البطارية لمحطة AD</h3>
+                        <div className="space-y-3 text-sm">
+                        <div className="bg-white p-4 rounded shadow">
+                            <p className="font-bold mb-2 text-teal-700">System Requirements | متطلبات النظام:</p>
+                            <p>AD plant capacity: 0.615 MW (updated from calculation) | سعة محطة AD: 0.615 ميغاوات</p>
+                            <p>Peak demand coverage: 1 MW for 2 hours (evening peak) | تغطية الطلب الذروي: 1 ميغاوات لـ 2 ساعات</p>
+                            <p>Battery round-trip efficiency: 90% | كفاءة الدورة الكاملة للبطارية: 90%</p>
+                            <p>Depth of discharge (DoD): 80% | عمق التفريغ: 80%</p>
+                        </div>
+                        <div className="bg-white p-4 rounded border-l-4 border-teal-500">
+                            <p className="font-bold mb-3 text-teal-700">Calculation Steps | خطوات الحساب:</p>
+                            <p className="font-semibold mb-1">1. Energy deficit during peak | عجز الطاقة خلال الذروة:</p>
+                            <p className="mb-3 ml-4">
+                            Edeficit = (1.0 MW - 0.615 MW) × 2 h = <span className="font-bold text-blue-600">0.77 MWh | 0.77 ميغاوات ساعة</span>
+                            </p>
+                            <p className="font-semibold mb-1">2. Required storage capacity | سعة التخزين المطلوبة:</p>
+                            <p className="mb-1 ml-4">Ebattery = Edeficit / (ηdischarge × DoD)</p>
+                            <p className="mb-3 ml-4">
+                            Ebattery = 0.77 MWh / (0.95 × 0.80) = <span className="font-bold text-orange-600 text-lg">1.01 MWh | 1.01 ميغاوات ساعة</span>
+                            </p>
+                            <p className="font-semibold mb-1">3. Charging power required | القدرة الشحن المطلوبة:</p>
+                            <p className="mb-1 ml-4">Available = 0.615 MW - 0.3 MW = 0.315 MW</p>
+                            <p className="mb-3 ml-4">
+                            Charging time = 1.01 MWh / (0.315 MW × 0.95) = <span className="font-bold text-blue-600">~3.4 hours | ~3.4 ساعات</span>
+                            </p>
+                            <p className="font-semibold mb-1">4. Capital investment (updated 2025 costs) | الاستثمار الرأسمالي:</p>
+                            <p className="mb-1 ml-4">Battery cost = 1.01 MWh × $240/kWh (avg) = $242,400 (~31,512,000 DZD) | تكلفة البطارية = 1.01 ميغاوات ساعة × 240 دولار/كيلووات ساعة = 242,400 دولار (~31,512,000 دينار جزائري)</p>
+                            <p className="mb-1 ml-4">Power conversion system = 1 MW × $200/kW = $200,000 (~26,000,000 DZD) | نظام تحويل القدرة = 1 ميغاوات × 200 دولار/كيلووات = 200,000 دولار (~26,000,000 دينار جزائري)</p>
+                            <p className="mb-1 ml-4">Installation and BOP (25%) = ~$110,600 (~14,378,000 DZD) | التركيب وBOP (25%) = ~110,600 دولار (~14,378,000 دينار جزائري)</p>
+                            <p className="ml-4">
+                            <span className="font-bold text-green-600 text-lg">Total = ~$553,000 (~71,890,000 DZD) | الإجمالي = ~553,000 دولار (~71,890,000 دينار جزائري)</span>
+                            </p>
+                        </div>
+                        <div className="bg-green-100 p-4 rounded">
+                            <p className="font-bold text-green-800 mb-2">System Performance | أداء النظام:</p>
+                            <p>Round-trip efficiency: 90% | كفاءة الدورة الكاملة: 90%</p>
+                            <p>Cycle life: 4,000-6,000 cycles (11-16 years at 1 cycle/day) | دورة الحياة: 4,000-6,000 دورة (11-16 سنة عند دورة واحدة/يوم)</p>
+                            <p>Payback period: 8-12 years (with proper tariff) | فترة الاسترداد: 8-12 سنة (مع تعرفة مناسبة)</p>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                )
+                },
+                {
+                title: "Power System Integration | تكامل نظام الطاقة",
+                subtitle: "Biomass + Storage Architecture | بنية الكتلة الحيوية + التخزين",
+                content: (
+                    <div className="space-y-6">
+                    <div className="bg-white p-6 rounded-lg shadow-lg border-4 border-blue-600">
+                        <h3 className="text-xl font-bold mb-6 text-center text-blue-700">Integrated System Diagram | رسم بياني للنظام المتكامل</h3>
+                        <div className="space-y-5">
+                        <div className="flex items-center justify-center gap-2">
+                            <div className="w-36 bg-green-600 text-white p-3 rounded-lg text-center font-bold text-xs">
+                            Biomass Input<br/>مدخل الكتلة الحيوية<br/>MSW / Palm Waste | النفايات / بقايا النخيل
+                            </div>
+                            <div className="text-3xl text-gray-600">→</div>
+                            <div className="w-36 bg-orange-600 text-white p-3 rounded-lg text-center font-bold text-xs">
+                            AD / Gasifier<br/>AD / غازي<br/>Biogas / Syngas | الغاز الحيوي / الغاز التركيبي
+                            </div>
+                        </div>
+                        <div className="flex items-center justify-center">
+                            <div className="text-4xl text-gray-600 font-bold">↓</div>
+                        </div>
+                        <div className="flex items-center justify-center gap-2">
+                            <div className="w-36 bg-red-600 text-white p-3 rounded-lg text-center font-bold text-xs">
+                            Gas Engine<br/>محرك غاز<br/>35-40% eff | 35-40% كفاءة
+                            </div>
+                            <div className="text-3xl text-gray-600">→</div>
+                            <div className="w-36 bg-purple-600 text-white p-3 rounded-lg text-center font-bold text-xs">
+                            Generator<br/>مولد<br/>96-98% eff | 96-98% كفاءة
+                            </div>
+                        </div>
+                        <div className="flex items-center justify-center">
+                            <div className="text-4xl text-gray-600 font-bold">↓</div>
+                        </div>
+                        <div className="flex items-center justify-center gap-3">
+                            <div className="w-32 bg-blue-600 text-white p-3 rounded-lg text-center font-bold text-xs">
+                            Grid<br/>الشبكة<br/>11-30 kV | 11-30 كيلوفولت
+                            </div>
+                            <div className="text-2xl text-gray-500">↔</div>
+                            <div className="w-32 bg-teal-600 text-white p-3 rounded-lg text-center font-bold text-xs">
+                            Battery<br/>بطارية<br/>Storage | التخزين
+                            </div>
+                            <div className="text-2xl text-gray-500">↔</div>
+                            <div className="w-32 bg-indigo-600 text-white p-3 rounded-lg text-center font-bold text-xs">
+                            Load<br/>الحمل<br/>Consumer | المستهلك
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-3 gap-4">
+                        <div className="bg-orange-50 p-4 rounded-lg shadow text-center">
+                        <p className="font-bold text-orange-700 text-sm">Production | الإنتاج</p>
+                        <p className="text-xs mt-2">Continuous | مستمر</p>
+                        </div>
+                        <div className="bg-blue-50 p-4 rounded-lg shadow text-center">
+                        <p className="font-bold text-blue-700 text-sm">Generation | التوليد</p>
+                        <p className="text-xs mt-2">0.5-5 MW range | نطاق 0.5-5 ميغاوات</p>
+                        </div>
+                        <div className="bg-green-50 p-4 rounded-lg shadow text-center">
+                        <p className="font-bold text-green-700 text-sm">Storage | التخزين</p>
+                        <p className="text-xs mt-2">2-4 hour capacity | سعة 2-4 ساعات</p>
+                        </div>
+                    </div>
+                    <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-600">
+                        <p className="font-bold text-gray-800 mb-2 text-sm">Integration Benefits | فوائد التكامل:</p>
+                        <div className="grid grid-cols-2 gap-2 text-xs">
+                        <p>✓ Baseload renewable generation | توليد متجدد أساسي</p>
+                        <p>✓ Peak demand support | دعم الطلب الذروي</p>
+                        <p>✓ Grid frequency regulation | تنظيم تردد الشبكة</p>
+                        <p>✓ Reduced curtailment losses | تقليل خسائر التقييد</p>
+                        <p>✓ Hybrid stability with batteries | استقرار هجين مع البطاريات</p>
+                        <p>✓ Waste-to-energy sustainability | استدامة النفايات إلى طاقة</p>
+                        </div>
+                    </div>
+                    </div>
+                )
+                },
+                {
+                title: "Algerian Case Study: Potential Sites | دراسة حالة جزائرية: المواقع المحتملة",
+                content: (
+                    <div className="space-y-5">
+                    <div className="bg-gradient-to-r from-green-50 to-blue-50 p-5 rounded-lg shadow-lg">
+                        <h3 className="text-xl font-bold mb-4 text-center">Priority Locations | المواقع ذات الأولوية</h3>
+                        <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-green-500">
+                            <h4 className="font-bold text-green-700 mb-2">1. Algiers Region | 1. منطقة الجزائر</h4>
+                            <div className="space-y-1 text-xs">
+                            <p>MSW available: ~2-3M tons/year | النفايات المتاحة: ~2-3 مليون طن/سنة</p>
+                            <p>Technology: Anaerobic Digestion | التقنية: الهضم اللاهوائي</p>
+                            <p>Potential capacity: 15-20 MW | السعة المحتملة: 15-20 ميغاوات</p>
+                            <p>Current status: Planning phase | الوضع الحالي: مرحلة التخطيط</p>
+                            <p>Grid connection: Excellent (30 kV) | الاتصال بالشبكة: ممتاز (30 كيلوفولت)</p>
+                            </div>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-orange-500">
+                            <h4 className="font-bold text-orange-700 mb-2">2. Biskra | 2. بسكرة</h4>
+                            <div className="space-y-1 text-xs">
+                            <p>Biomass: ~500,000 tons/year palm waste | الكتلة الحيوية: ~500,000 طن/سنة بقايا نخيل</p>
+                            <p>Technology: Gasification | التقنية: الغازية</p>
+                            <p>Potential capacity: 8-12 MW | السعة المحتملة: 8-12 ميغاوات</p>
+                            <p>Current status: Feasibility study | الوضع الحالي: دراسة جدوى</p>
+                            <p>Grid connection: Good (60 kV) | الاتصال بالشبكة: جيد (60 كيلوفولت)</p>
+                            </div>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-500">
+                            <h4 className="font-bold text-blue-700 mb-2">3. Oran Region | 3. منطقة وهران</h4>
+                            <div className="space-y-1 text-xs">
+                            <p>MSW available: ~1.2-1.5M tons/year | النفايات المتاحة: ~1.2-1.5 مليون طن/سنة</p>
+                            <p>Technology: Anaerobic Digestion | التقنية: الهضم اللاهوائي</p>
+                            <p>Potential capacity: 10-15 MW | السعة المحتملة: 10-15 ميغاوات</p>
+                            <p>Current status: Pilot project active | الوضع الحالي: مشروع تجريبي نشط</p>
+                            <p>Grid connection: Very good (30 kV) | الاتصال بالشبكة: جيد جداً (30 كيلوفولت)</p>
+                            </div>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-purple-500">
+                            <h4 className="font-bold text-purple-700 mb-2">4. Constantine | 4. قسنطينة</h4>
+                            <div className="space-y-1 text-xs">
+                            <p>MSW available: ~0.8-1M tons/year | النفايات المتاحة: ~0.8-1 مليون طن/سنة</p>
+                            <p>Technology: Anaerobic Digestion | التقنية: الهضم اللاهوائي</p>
+                            <p>Potential capacity: 6-10 MW | السعة المحتملة: 6-10 ميغاوات</p>
+                            <p>Current status: Early planning | الوضع الحالي: تخطيط مبكر</p>
+                            <p>Grid connection: Adequate (30 kV) | الاتصال بالشبكة: كافٍ (30 كيلوفولت)</p>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="bg-white p-5 rounded-lg shadow-md">
+                        <h4 className="font-bold mb-3">Total National Potential (2025-2035) | الإمكانية الوطنية الإجمالية (2025-2035)</h4>
+                        <div className="grid grid-cols-4 gap-3">
+                        <div className="bg-green-50 p-3 rounded text-center">
+                            <p className="text-2xl font-bold text-green-600">50-70</p>
+                            <p className="text-xs font-semibold mt-1">MW Capacity | سعة ميغاوات</p>
+                        </div>
+                        <div className="bg-blue-50 p-3 rounded text-center">
+                            <p className="text-2xl font-bold text-blue-600">400-560</p>
+                            <p className="text-xs font-semibold mt-1">GWh/year | جيجاوات ساعة/سنة</p>
+                        </div>
+                        <div className="bg-orange-50 p-3 rounded text-center">
+                            <p className="text-2xl font-bold text-orange-600">1-2%</p>
+                            <p className="text-xs font-semibold mt-1">National Demand | الطلب الوطني</p>
+                        </div>
+                        <div className="bg-purple-50 p-3 rounded text-center">
+                            <p className="text-2xl font-bold text-purple-600">$150-250M (~19.5-32.5B DZD)</p>
+                            <p className="text-xs font-semibold mt-1">Investment | الاستثمار</p>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500">
+                        <p className="text-sm font-semibold text-gray-800">
+                        Priority: MSW-based AD plants in major cities (Algiers, Oran, Constantine) due to waste management co-benefits and existing grid infrastructure. | الأولوية: محطات AD القائمة على النفايات في المدن الكبرى (الجزائر، وهران، قسنطينة) بسبب فوائد إدارة النفايات والشبكة الحالية.
+                        </p>
+                    </div>
+                    </div>
+                )
+                },
+                {
+                title: "Conclusions and Recommendations | الاستنتاجات والتوصيات",
+                content: (
+                    <div className="space-y-5">
+                    <div className="bg-gradient-to-r from-green-100 to-blue-100 p-5 rounded-lg shadow-lg">
+                        <h3 className="text-xl font-bold mb-4 text-center text-gray-800">Key Findings | النتائج الرئيسية</h3>
+                        <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-green-500">
+                            <h4 className="font-bold text-green-700 mb-2">Technical Performance | الأداء الفني</h4>
+                            <div className="space-y-1 text-sm">
+                            <p>AD efficiency: 30-40% | كفاءة AD: 30-40%</p>
+                            <p>Gasification efficiency: 45-50% | كفاءة الغازية: 45-50%</p>
+                            <p>Storage RTE: 85-95% (batteries) | RTE للتخزين: 85-95% (البطاريات)</p>
+                            <p>Combined system: 25-35% overall | النظام المجمع: 25-35% إجمالي</p>
+                            </div>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-500">
+                            <h4 className="font-bold text-blue-700 mb-2">Economic Viability | الجدوى الاقتصادية</h4>
+                            <div className="space-y-1 text-sm">
+                            <p>LCOE: $0.10-0.15/kWh (~13-19.5 DZD/kWh) | LCOE: 0.10-0.15 دولار/كيلووات ساعة (~13-19.5 دينار جزائري/كيلووات ساعة)</p>
+                            <p>Payback: 8-15 years | الاسترداد: 8-15 سنة</p>
+                            <p>Job creation: 15-25 jobs/MW | إنشاء فرص عمل: 15-25 وظيفة/ميغاوات</p>
+                            <p>Waste management savings | توفير في إدارة النفايات</p>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="bg-white p-5 rounded-lg shadow-md">
+                        <h4 className="font-bold mb-3 text-gray-800">Recommendations for Algeria | توصيات للجزائر</h4>
+                        <div className="grid grid-cols-2 gap-3">
+                        <div className="space-y-2">
+                            <div className="bg-green-50 p-3 rounded-lg border-l-4 border-green-500">
+                            <p className="font-bold text-green-700 mb-2 text-sm">Short-term (2025-2028) | قصير الأجل (2025-2028)</p>
+                            <div className="text-xs space-y-1">
+                                <p>✓ Prioritize AD for MSW in major cities | أولوية AD للنفايات في المدن الكبرى</p>
+                                <p>✓ Pilot 3-5 MW plants in Algiers, Oran | مشاريع تجريبية 3-5 ميغاوات في الجزائر، وهران</p>
+                                <p>✓ Develop regulatory framework and tariffs | تطوير إطار تنظيمي وتعرفات</p>
+                                <p>✓ Train local engineers and operators | تدريب المهندسين والمشغلين المحليين</p>
+                            </div>
+                            </div>
+                            <div className="bg-orange-50 p-3 rounded-lg border-l-4 border-orange-500">
+                            <p className="font-bold text-orange-700 mb-2 text-sm">Technology Selection | اختيار التقنية</p>
+                            <div className="text-xs space-y-1">
+                                <p>✓ AD for wet MSW (moisture over 40%) | AD للنفايات الرطبة (رطوبة أكثر من 40%)</p>
+                                <p>✓ Gasification for dry agricultural waste | الغازية لبقايا زراعية جافة</p>
+                                <p>✓ Battery storage for plants under 5 MW | تخزين بطاريات لمحطات تحت 5 ميغاوات</p>
+                                <p>✓ CHP systems for maximum efficiency | أنظمة CHP لأقصى كفاءة</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div className="space-y-2">
+                            <div className="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-500">
+                            <p className="font-bold text-blue-700 mb-2 text-sm">Medium-term (2028-2035) | متوسط الأجل (2028-2035)</p>
+                            <div className="text-xs space-y-1">
+                                <p>✓ Scale to 50-70 MW national capacity | توسيع إلى 50-70 ميغاوات سعة وطنية</p>
+                                <p>✓ Develop gasification for date palm waste | تطوير الغازية لبقايا نخيل التمر</p>
+                                <p>✓ Integrate with solar/wind microgrids | التكامل مع شبكات صغيرة شمسية/رياح</p>
+                                <p>✓ Establish local manufacturing | إنشاء تصنيع محلي</p>
+                            </div>
+                            </div>
+                            <div className="bg-purple-50 p-3 rounded-lg border-l-4 border-purple-500">
+                            <p className="font-bold text-purple-700 mb-2 text-sm">Policy and Financing | السياسة والتمويل</p>
+                            <div className="text-xs space-y-1">
+                                <p>✓ Feed-in tariff: $0.12-0.15/kWh (~15.6-19.5 DZD/kWh) | تعرفة التغذية: 0.12-0.15 دولار/كيلووات ساعة (~15.6-19.5 دينار جزائري/كيلووات ساعة)</p>
+                                <p>✓ Tax incentives for investors | حوافز ضريبية للمستثمرين</p>
+                                <p>✓ Public-private partnerships | شراكات عامة-خاصة</p>
+                                <p>✓ International climate financing | تمويل دولي للمناخ</p>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="bg-gradient-to-r from-yellow-50 to-orange-50 p-4 rounded-lg border-2 border-orange-400">
+                        <p className="font-bold text-gray-800 mb-2 text-center">Strategic Importance | الأهمية الاستراتيجية</p>
+                        <p className="text-sm text-center">
+                        Biomass energy can help Algeria achieve its 27% renewable target by 2035 while addressing urban waste management challenges. Combined with storage, it provides reliable baseload power complementing intermittent solar and wind resources. | يمكن أن تساعد طاقة الكتلة الحيوية الجزائر في تحقيق هدف 27% طاقة متجددة بحلول 2035 مع معالجة تحديات إدارة النفايات الحضرية. مجتمعة مع التخزين، توفر طاقة أساسية موثوقة تكمل الموارد الشمسية والرياح المتقطعة.
+                        </p>
+                    </div>
+                    </div>
+                )
+                }
+            ];
+
+            const nextSlide = () => {
+                setCurrentSlide((prev) => (prev + 1) % slides.length);
+            };
+
+            const prevSlide = () => {
+                setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+            };
+
+            return (
+                <div className="w-full h-screen bg-gradient-to-br from-gray-900 to-blue-900 flex flex-col">
+                <div className="bg-gradient-to-r from-green-700 to-blue-700 text-white px-8 py-4 shadow-lg">
+                    <h1 className="text-2xl font-bold">Biomass Electricity Generation and Storage | توليد الكهرباء من الكتلة الحيوية والتخزين</h1>
+                    <p className="text-sm text-blue-100">Algerian Context - Department of Electrical and Renewable Energy Engineering | السياق الجزائري - قسم الهندسة الكهربائية وطاقات متجددة</p>
+                </div>
+                <div className="flex-1 flex items-center justify-center p-8">
+                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-6xl h-full flex flex-col">
+                    <div className="bg-gradient-to-r from-green-600 to-blue-600 text-white px-8 py-6 rounded-t-xl">
+                        <h2 className="text-3xl font-bold mb-2">{slides[currentSlide].title}</h2>
+                        {slides[currentSlide].subtitle && (
+                        <p className="text-lg text-blue-100">{slides[currentSlide].subtitle}</p>
+                        )}
+                    </div>
+                    <div className="flex-1 overflow-y-auto p-8">
+                        {slides[currentSlide].content}
+                    </div>
+                    <div className="border-t border-gray-200 px-8 py-4 flex items-center justify-between bg-gray-50 rounded-b-xl">
+                        <button
+                        onClick={prevSlide}
+                        className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled={currentSlide === 0}
+                        >
+                        <ChevronLeft className="w-5 h-5" />
+                        Previous | السابق
+                        </button>
+                        <div className="flex items-center gap-2">
+                        <span className="text-gray-600 font-medium">
+                            Slide {currentSlide + 1} of {slides.length} | الشريحة {currentSlide + 1} من {slides.length}
+                        </span>
+                        <div className="flex gap-1 ml-4">
+                            {slides.map((_, index) => (
+                            <button
+                                key={index}
+                                onClick={() => setCurrentSlide(index)}
+                                className={`w-2 h-2 rounded-full transition-all ${
+                                index === currentSlide ? 'bg-green-600 w-8' : 'bg-gray-300'
+                                }`}
+                            />
+                            ))}
+                        </div>
+                        </div>
+                        <button
+                        onClick={nextSlide}
+                        className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled={currentSlide === slides.length - 1}
+                        >
+                        Next | التالي
+                        <ChevronRight className="w-5 h-5" />
+                        </button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            );
+            };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<BiomassPresentation />);
+    </script>
+</body>
+</html>
+```
